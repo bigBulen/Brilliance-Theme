@@ -1,0 +1,127 @@
+/* 足迹地图后台 */
+
+.bm-admin .bm-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin: 12px 0;
+}
+
+.bm-admin .bm-filters select {
+    max-width: 180px;
+}
+
+.bm-admin__meta {
+    color: #646970;
+    margin: 8px 0;
+}
+
+.bm-table td,
+.bm-table th {
+    vertical-align: middle;
+}
+
+.bm-req {
+    color: #d63638;
+}
+
+.bm-coords input {
+    margin-right: 8px;
+}
+
+.bm-form .form-table th {
+    width: 160px;
+}
+
+/* 查重提示 */
+#bm-dup-hint .bm-dup {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: #fcf9e8;
+    border: 1px solid #dba617;
+    border-radius: 6px;
+    font-size: 12px;
+    max-width: 520px;
+}
+
+#bm-dup-hint .bm-dup ul {
+    margin: 4px 0 4px 18px;
+    list-style: disc;
+}
+
+#bm-dup-hint .bm-dup em {
+    color: #646970;
+}
+
+.bm-related {
+    margin-top: 28px;
+    max-width: 900px;
+}
+
+.bm-related h2 {
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.bm-related .widefat {
+    max-width: 760px;
+}
+
+/* 地图设置页 */
+.bm-settings .bm-stats-panel {
+    max-width: 900px;
+    margin: 16px 0 24px;
+    padding: 16px 20px;
+    background: #fff;
+    border: 1px solid #dcdcde;
+    border-radius: 6px;
+}
+
+.bm-settings .bm-stats-panel h2 {
+    margin-top: 0;
+    font-size: 15px;
+}
+
+.bm-stats-panel__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+    margin: 8px 0 12px;
+}
+
+.bm-stats-panel__list li {
+    margin: 0;
+    color: #646970;
+}
+
+.bm-stats-panel__list b {
+    color: #1d2327;
+    font-size: 16px;
+    margin: 0 4px;
+}
+
+.bm-settings .bm-radio,
+.bm-settings .bm-check {
+    display: inline-block;
+    margin: 0 18px 4px 0;
+}
+
+.bm-settings .bm-coords label {
+    display: inline-block;
+    margin-right: 14px;
+}
+
+.bm-danger {
+    max-width: 900px;
+    margin-top: 32px;
+    padding: 16px 20px;
+    border: 1px solid #d63638;
+    border-radius: 6px;
+}
+
+.bm-danger h2 {
+    margin-top: 0;
+    color: #d63638;
+    font-size: 15px;
+}

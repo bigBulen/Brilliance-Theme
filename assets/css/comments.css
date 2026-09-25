@@ -1,0 +1,966 @@
+/**
+ * 评论区样式
+ */
+
+/* ========== 评论区容器 ========== */
+.comments-section {
+    padding: 1rem;
+    background: var(--bg-card);
+    border-radius: 12px;
+}
+
+.comments-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border);
+}
+
+.comments-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.comments-title svg {
+    color: var(--accent);
+}
+
+.comments-count {
+    color: var(--text-3);
+    font-size: 0.9rem;
+}
+
+.comments-empty,
+.comments-closed {
+    padding: 2rem;
+    text-align: center;
+    color: var(--text-3);
+}
+
+/* ========== 评论列表 ========== */
+.comment-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.comment-item {
+    margin-bottom: 1.5rem;
+}
+
+.comment-body {
+    display: flex;
+    gap: 1rem;
+}
+
+.comment-avatar {
+    flex-shrink: 0;
+}
+
+.comment-avatar img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.comment-main {
+    flex: 1;
+    min-width: 0;
+}
+
+/* ========== 评论元信息 ========== */
+.comment-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.comment-author {
+    font-weight: 600;
+    color: var(--text);
+}
+
+.comment-badge {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 4px;
+    line-height: 1.4;
+}
+
+.comment-badge--author {
+    background: var(--accent);
+    color: #fff;
+}
+
+.comment-badge--pinned {
+    background: var(--accent);
+    color: #fff;
+}
+
+.comment-date {
+    color: var(--text-3);
+    font-size: 0.85rem;
+}
+
+.comment-reply-to {
+    color: var(--accent);
+    font-size: 0.85rem;
+}
+
+/* ========== 评论内容 ========== */
+.comment-content {
+    margin-bottom: 0.75rem;
+    line-height: 1.7;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.comment-content.is-foldable {
+    max-height: 200px;
+    overflow: hidden;
+    position: relative;
+    transition: max-height 0.3s ease;
+}
+
+.comment-content.is-foldable.is-expanded {
+    max-height: none;
+}
+
+.comment-content p:last-child {
+    margin-bottom: 0;
+}
+
+.comment-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 0.5rem 0;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.comment-content img:hover {
+    transform: scale(1.02);
+}
+
+.comment-content code {
+    padding: 0.2rem 0.4rem;
+    background: var(--code-bg);
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-family: 'Consolas', 'Monaco', monospace;
+}
+
+.comment-content pre {
+    padding: 1rem;
+    background: var(--code-bg);
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+.comment-content pre code {
+    padding: 0;
+    background: none;
+}
+
+.comment-content blockquote {
+    margin: 1rem 0;
+    padding-left: 1rem;
+    border-left: 4px solid var(--accent);
+    color: var(--text-3);
+    font-style: italic;
+}
+
+/* ========== 折叠按钮 ========== */
+.comment-fold-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0.75rem;
+    margin-bottom: 0.75rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--accent);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.comment-fold-toggle:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+
+.comment-fold-toggle svg {
+    transition: transform 0.3s ease;
+}
+
+.comment-fold-toggle.is-expanded svg {
+    transform: rotate(180deg);
+}
+
+/* ========== 评论操作 ========== */
+.comment-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.comment-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.75rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-2);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.comment-action:hover {
+    background: var(--bg-hover);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.comment-action svg {
+    width: 14px;
+    height: 14px;
+}
+
+.comment-action--upvote.is-upvoted {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.comment-upvote-count {
+    font-weight: 500;
+}
+
+/* ========== 嵌套回复 ========== */
+.comment-children {
+    list-style: none;
+    padding: 0;
+    margin: 0.6rem 0 0 0;
+    border-left: 1px solid var(--border);
+    padding-left: 0.6rem;
+}
+.comment-children .comment-item {
+    margin-bottom: 0.55rem;
+}
+
+.comment-item--reply .comment-avatar img {
+    width: 36px;
+    height: 36px;
+}
+
+.comment-depth-2 {
+    font-size: 0.95rem;
+}
+
+.comment-depth-3 {
+    font-size: 0.9rem;
+}
+
+/* ========== 置顶/作者高亮 ========== */
+.comment-item.is-pinned {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.05), rgba(255, 107, 107, 0.02));
+    border-left: 4px solid var(--accent-rgb);
+    padding-left: 1rem;
+    border-radius: 8px;
+}
+
+.comment-item.is-author {
+    background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.05), rgba(var(--accent-rgb), 0.02));
+}
+
+/* ========== 评论表单 ========== */
+.comment-form-wrap {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--border);
+}
+
+.comment-form-title {
+    margin: 0 0 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.comment-form-field {
+    margin-bottom: 1rem;
+}
+
+.comment-form-field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.comment-form-field textarea,
+.comment-form-field input[type="text"],
+.comment-form-field input[type="email"],
+.comment-form-field input[type="url"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--bg-hover);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.comment-form-field textarea:focus,
+.comment-form-field input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.1);
+}
+
+.comment-form-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.comment-form-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.comment-form-options {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.comment-form-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.comment-submit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--accent);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.comment-submit-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+}
+
+.comment-reply-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    background: var(--bg-card-2);
+    border-left: 4px solid var(--accent);
+    border-radius: 4px;
+}
+
+.comment-reply-cancel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    color: var(--text-3);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.comment-reply-cancel:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--text);
+}
+
+/* ========== 评论分页 ========== */
+.comments-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 2rem 0;
+}
+
+.comments-pagination a,
+.comments-pagination span.page-numbers {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 0.75rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-2);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.comments-pagination a:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.comments-pagination .current {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.comments-pagination .comments-pagination__icon {
+    display: inline-block;
+    font-size: 1.45rem;
+    font-weight: 400;
+    line-height: 1;
+}
+
+.screen-reader-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ========== UA 图标字体 ========== */
+.mimosa-icon-windows::before { content: ""; }
+.mimosa-icon-mac::before { content: ""; }
+.mimosa-icon-android::before { content: "🤖"; }
+.mimosa-icon-ios::before { content: ""; }
+.mimosa-icon-linux::before { content: "🐧"; }
+.mimosa-icon-chrome::before { content: ""; }
+.mimosa-icon-firefox::before { content: "🦊"; }
+.mimosa-icon-safari::before { content: ""; }
+.mimosa-icon-edge::before { content: ""; }
+.mimosa-icon-ie::before { content: "IE"; }
+.mimosa-icon-opera::before { content: ""; }
+
+/* ========== 灯箱 ========== */
+.mimosa-lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+}
+
+.mimosa-lightbox__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.mimosa-lightbox__container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+}
+
+.mimosa-lightbox__img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.mimosa-lightbox__close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mimosa-lightbox__close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.mimosa-lightbox__prev,
+.mimosa-lightbox__next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mimosa-lightbox__prev:hover,
+.mimosa-lightbox__next:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.mimosa-lightbox__prev {
+    left: 2rem;
+}
+
+.mimosa-lightbox__next {
+    right: 2rem;
+}
+
+.mimosa-lightbox__counter {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+/* ========== 响应式 ========== */
+@media (max-width: 768px) {
+    .comments-section {
+        padding: 1.5rem 1rem;
+    }
+    
+    .comment-form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .comment-children {
+        margin-left: 0.5rem;
+        padding-left: 0.5rem;
+    }
+    
+    .comment-actions {
+        gap: 0.5rem;
+    }
+    
+    .comment-action {
+        font-size: 0.8rem;
+        padding: 0.35rem 0.6rem;
+    }
+    
+    .mimosa-emotion-keyboard {
+        max-width: 100%;
+    }
+    
+    .mimosa-emotion-content {
+        max-height: 240px;
+    }
+    
+    .mimosa-emotion-group {
+        grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    }
+    
+    .comment-content .comment-sticker {
+        max-width: 120px;
+        max-height: 55px;
+        display: inline !important;
+    }
+    
+    .comment-history-dialog {
+        width: 95%;
+        margin: 2vh auto;
+        max-height: 90vh;
+    }
+}
+
+/* ========== 暗色模式 ========== */
+@media (prefers-color-scheme: dark) {
+    .comment-content code {
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .comment-reply-cancel:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* ========== 表情包选择器 ========== */
+.mimosa-emotion-keyboard {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    max-width: 480px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+}
+
+.mimosa-emotion-content {
+    padding: 1rem;
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.mimosa-emotion-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 0.5rem;
+}
+
+.mimosa-emotion-group.is-hidden {
+    display: none;
+}
+
+.mimosa-emotion-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    background: var(--bg-hover);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mimosa-emotion-item:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    transform: scale(1.1);
+}
+
+.mimosa-emotion-item--text {
+    font-size: 1.2rem;
+    min-height: 60px;
+}
+
+.mimosa-emotion-item--sticker {
+    padding: 0.25rem;
+}
+
+.mimosa-emotion-item--sticker img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.mimosa-emotion-description {
+    grid-column: 1 / -1;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background: var(--text);
+    border-radius: 6px;
+    color: var(--text-3);
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.mimosa-emotion-tabs {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.75rem;
+    border-top: 1px solid var(--border);
+    background: var(--bg-hover);
+    border-radius: 0 0 12px 12px;
+    overflow-x: auto;
+}
+
+.mimosa-emotion-tab {
+    flex-shrink: 0;
+    padding: 0.4rem 1rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-2);
+    font-size: 0.85rem;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mimosa-emotion-tab:hover {
+    background: var(--bg-card);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.mimosa-emotion-tab.is-active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.comment-emotion-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.comment-emotion-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.comment-emotion-btn.is-active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.comment-form-footer {
+    position: relative;
+}
+
+/* ========== 表情包选择器 ========== */
+.mimosa-emotion-keyboard {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    max-width: 480px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+}
+
+.mimosa-emotion-content {
+    padding: 1rem;
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.mimosa-emotion-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 0.5rem;
+}
+
+.mimosa-emotion-group.is-hidden {
+    display: none;
+}
+
+.mimosa-emotion-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    background: var(--bg-hover);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mimosa-emotion-item:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    transform: scale(1.1);
+}
+
+.mimosa-emotion-item--text {
+    font-size: 1.2rem;
+    min-height: 60px;
+}
+
+.mimosa-emotion-item--sticker {
+    padding: 0.25rem;
+}
+
+.mimosa-emotion-item--sticker img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.mimosa-emotion-description {
+    grid-column: 1 / -1;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background: var(--text);
+    border-radius: 6px;
+    color: var(--text-3);
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.mimosa-emotion-tabs {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.75rem;
+    border-top: 1px solid var(--border);
+    background: var(--bg-hover);
+    border-radius: 0 0 12px 12px;
+    overflow-x: auto;
+}
+
+.mimosa-emotion-tab {
+    flex-shrink: 0;
+    padding: 0.4rem 1rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-2);
+    font-size: 0.85rem;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mimosa-emotion-tab:hover {
+    background: var(--bg-card);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.mimosa-emotion-tab.is-active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.comment-emotion-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.comment-emotion-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.comment-emotion-btn.is-active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.comment-form-footer {
+    position: relative;
+}
+
+/* 表情包图片样式 */
+.comment-content .comment-sticker {
+    max-width: 150px;
+    max-height: 65px;
+    width: auto;
+    height: auto;
+    margin: 0rem 0;
+    border-radius: 8px;
+    display: inline !important;
+}
+
+@media (max-width: 768px) {
+    .mimosa-emotion-keyboard {
+        max-width: 100%;
+    }
+    
+    .mimosa-emotion-content {
+        max-height: 240px;
+    }
+    
+    .mimosa-emotion-group {
+        grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    }
+    
+    .comment-content .comment-sticker {
+        max-width: 120px;
+        max-height: 55px;
+        display: inline !important;
+    }
+}
+
+
+hr.comment-dashed-line {
+     border: none; /* 去掉默认边框 */
+     border-top: 1px dashed #7a7a7a; /* 设置虚线样式、粗细和颜色 */
+     width: 80%; /* 控制长度 */
+     margin: 20px auto; /* 上下间距并居中 */
+}

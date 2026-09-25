@@ -1,0 +1,246 @@
+/* 足迹地图（Leaflet 容器 + 工具栏 + 弹窗卡片） */
+
+.bm-root {
+    position: relative;
+    margin: 1.5rem 0;
+}
+
+.bm-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    padding: 10px 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    font-size: 0.85rem;
+    color: var(--text-2);
+}
+
+.bm-toolbar select {
+    padding: 5px 10px;
+    border: 1px solid var(--border-2);
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    color: var(--text);
+    font-size: 0.82rem;
+    cursor: pointer;
+}
+
+.bm-filter-posts {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.bm-stats {
+    margin-left: auto;
+    color: var(--text-3);
+    font-size: 0.8rem;
+}
+
+.bm-stats b {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.bm-map {
+    height: min(72vh, 680px);
+    min-height: 380px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    z-index: 1;
+    background: var(--bg-card);
+}
+
+/* 关闭街区瓦片时，用页面卡片色作底，国家轮廓作为唯一背景 */
+.bm-map.leaflet-container,
+.bm-map--no-tiles {
+    background: var(--bg-card);
+}
+
+.bm-attribution {
+    margin-top: 6px;
+    text-align: right;
+    font-size: 0.7rem;
+    color: var(--text-3);
+}
+.bm-attribution a { color: var(--text-3); }
+
+/* ── 标点（颜色梯度：0 / 1 / 2-3 / 4+） ── */
+.bm-pin {
+    display: block;
+    width: 16px;
+    height: 16px;
+    margin: 2px;
+    border-radius: 50%;
+    background: var(--bm-pin-color, #9ca3af);
+    border: 2px solid rgba(255, 255, 255, 0.92);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+    transition: transform 0.15s ease;
+    cursor: pointer;
+}
+.bm-pin:hover { transform: scale(1.25); }
+.bm-pin--t0 { --bm-pin-color: #9ca3af; }
+.bm-pin--t1 { --bm-pin-color: #38bdf8; }
+.bm-pin--t2 { --bm-pin-color: #818cf8; }
+.bm-pin--t3 { --bm-pin-color: #f43f5e; }
+
+/* 关联数量徽标（显示选项「显示相关文章数量徽标」） */
+.bm-pin { position: relative; }
+.bm-pin__count {
+    position: absolute;
+    top: -7px;
+    right: -9px;
+    min-width: 14px;
+    height: 14px;
+    padding: 0 3px;
+    border-radius: 999px;
+    background: #1f2937;
+    color: #fff;
+    font-size: 9px;
+    line-height: 14px;
+    font-weight: 700;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+}
+
+/* ── 地名标签（标记点下方，经去重叠后显示） ── */
+.leaflet-tooltip.bm-label {
+    padding: 1px 6px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.86);
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    white-space: nowrap;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+    pointer-events: none;
+}
+.leaflet-tooltip.bm-label::before { display: none; }
+[data-theme="dark"] .leaflet-tooltip.bm-label {
+    background: rgba(24, 24, 31, 0.86);
+}
+
+.bm-pin--focus { animation: bm-pin-pulse 1.2s ease-out 3; }
+@keyframes bm-pin-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.6), 0 1px 6px rgba(0,0,0,.35); }
+    100% { box-shadow: 0 0 0 18px rgba(244, 63, 94, 0), 0 1px 6px rgba(0,0,0,.35); }
+}
+
+/* ── 弹窗 ── */
+.bm-popup-wrap .leaflet-popup-content-wrapper {
+    border-radius: 14px;
+}
+.bm-popup-wrap .leaflet-popup-content {
+    margin: 12px 14px;
+    line-height: 1.5;
+}
+
+.bm-popup {
+    font-size: 0.85rem;
+    color: #333;
+    min-width: 220px;
+    max-width: 300px;
+}
+.bm-popup__title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 2px;
+}
+.bm-popup__meta {
+    color: #666;
+    font-size: 0.78rem;
+    margin-bottom: 4px;
+}
+.bm-popup__cat {
+    display: inline-block;
+    margin-left: 4px;
+    padding: 1px 8px;
+    border-radius: 999px;
+    background: rgba(124, 106, 247, 0.12);
+    color: #6d5ce0;
+    font-size: 0.72rem;
+}
+.bm-popup__date {
+    color: #888;
+    font-size: 0.76rem;
+    margin-bottom: 6px;
+}
+.bm-popup__desc {
+    margin: 6px 0;
+    padding-top: 6px;
+    border-top: 1px dashed rgba(0, 0, 0, 0.12);
+    color: #444;
+    max-height: 120px;
+    overflow-y: auto;
+}
+.bm-popup__posts {
+    margin-top: 8px;
+    max-height: 250px;
+    overflow-y: auto;
+}
+.bm-popup__posts.is-empty,
+.bm-popup__loading {
+    color: #999;
+    font-size: 0.8rem;
+    padding: 4px 0;
+}
+
+.bm-post-card {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 8px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    color: inherit;
+    text-decoration-line: none !important;
+}
+.bm-post-card:hover .bm-post-card__title { color: #6d5ce0; }
+.bm-post-card__thumb {
+    width: 56px;
+    height: 42px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex: 0 0 auto;
+}
+.bm-post-card__body {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.bm-post-card__title {
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: #222;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.bm-post-card__excerpt {
+    font-size: 0.74rem;
+    color: #888;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.bm-post-card__meta {
+    font-size: 0.72rem;
+    color: #aaa;
+}
+
+@media (max-width: 640px) {
+    .bm-toolbar { gap: 8px; padding: 8px 10px; }
+    .bm-stats { margin-left: 0; width: 100%; }
+    .bm-map { height: 60vh; min-height: 320px; }
+}

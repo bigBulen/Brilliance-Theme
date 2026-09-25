@@ -1,0 +1,349 @@
+/* Comment enhancements: emotion panel and shared image lightbox */
+.comment-form-wrap {
+    position: relative;
+}
+
+.mimosa-emotion-keyboard {
+    position: absolute;
+    left: 0;
+    bottom: calc(100% + 0.75rem);
+    width: min(480px, calc(100vw - 2rem));
+    max-width: 100%;
+    padding: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border-2);
+    border-radius: 12px;
+    box-shadow: var(--shadow-card);
+    z-index: 1200;
+}
+
+.mimosa-emotion-content {
+    padding: 0.9rem;
+    max-height: 320px;
+}
+
+.mimosa-emotion-item {
+    min-height: 54px;
+    background: var(--bg-hover);
+    color: var(--text);
+}
+
+.mimosa-emotion-item:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.mimosa-emotion-description {
+    background: var(--bg-card-2);
+    color: var(--text-3);
+}
+
+.mimosa-emotion-tabs {
+    border-top-color: var(--border);
+    background: var(--bg-card-2);
+}
+
+.mimosa-emotion-tab {
+    border-color: var(--border);
+    color: var(--text-2);
+}
+
+.mimosa-emotion-tab:hover,
+.mimosa-emotion-tab.is-active,
+.comment-emotion-btn:hover,
+.comment-emotion-btn.is-active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.comment-emotion-btn {
+    border-color: var(--border);
+    color: var(--text-2);
+}
+
+.mimosa-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.mimosa-lightbox.is-open {
+    display: flex;
+}
+
+.mimosa-lightbox__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(5, 6, 10, 0.9);
+    backdrop-filter: blur(4px);
+}
+
+.mimosa-lightbox__container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: min(92vw, 1300px);
+    height: min(88vh, 900px);
+}
+
+.mimosa-lightbox__img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+}
+
+.mimosa-lightbox__close,
+.mimosa-lightbox__prev,
+.mimosa-lightbox__next {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.35);
+    color: #fff;
+    cursor: pointer;
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.mimosa-lightbox__close { top: 0; right: 0; font-size: 1.7rem; }
+.mimosa-lightbox__prev { left: 0; }
+.mimosa-lightbox__next { right: 0; }
+.mimosa-lightbox__close:hover,
+.mimosa-lightbox__prev:hover,
+.mimosa-lightbox__next:hover { background: var(--accent); border-color: var(--accent); }
+
+.mimosa-lightbox__counter {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.35rem 0.7rem;
+    border-radius: 99px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    font-size: 0.8rem;
+}
+
+body.mimosa-lightbox-open { overflow: hidden; }
+.article-single__content img,
+.page-single__content img,
+.shuoshuo-card__img,
+.shuoshuo-detail__images img,
+.comment-content img { cursor: zoom-in; }
+
+@media (max-width: 640px) {
+    .mimosa-emotion-keyboard { left: 50%; transform: translateX(-50%); }
+    .mimosa-lightbox__prev { left: 0.25rem; }
+    .mimosa-lightbox__next { right: 0.25rem; }
+    .mimosa-lightbox__close { top: -0.25rem; right: 0; }
+}
+/* 灯箱高级交互：缩放 + 缩略图导航 */
+.mimosa-lightbox__img {
+    transition: transform 0.25s ease;
+    cursor: zoom-in;
+}
+.mimosa-lightbox__img.is-zoomed {
+    cursor: grab;
+}
+.mimosa-lightbox__img.is-dragging {
+    cursor: grabbing;
+    transition: none;
+}
+.mimosa-lightbox__zoom {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.35);
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.4rem;
+    line-height: 1;
+}
+.mimosa-lightbox__zoom:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+.mimosa-lightbox__thumbs {
+    position: absolute;
+    bottom: 2.6rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    max-width: 92%;
+    overflow-x: auto;
+    padding: 6px;
+}
+.mimosa-lightbox__thumb {
+    width: 56px;
+    height: 42px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 2px solid transparent;
+    opacity: 0.55;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+.mimosa-lightbox__thumb.is-active {
+    opacity: 1;
+    border-color: var(--accent);
+}
+.mimosa-lightbox__counter {
+    bottom: auto;
+    top: 0.8rem;
+}
+@media (max-width: 640px) {
+    .mimosa-lightbox__zoom { bottom: 0; right: 0; }
+    .mimosa-lightbox__thumbs { bottom: 3.2rem; }
+}
+
+/* BBCode 帮助（评论区底部展开提示） */
+.comment-bbcode-help {
+    margin-top: 14px;
+}
+.comment-bbcode-help__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    color: var(--text-3);
+    font-size: 0.78rem;
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 6px;
+    transition: color 0.2s ease, background 0.2s ease;
+}
+.comment-bbcode-help__toggle:hover,
+.comment-bbcode-help__toggle.is-active {
+    color: var(--accent);
+}
+.comment-bbcode-help__chevron {
+    transition: transform 0.2s ease;
+}
+.comment-bbcode-help__toggle.is-active .comment-bbcode-help__chevron {
+    transform: rotate(180deg);
+}
+.comment-bbcode-help__list {
+    display: none;
+    margin-top: 8px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg-card-2);
+}
+.comment-bbcode-help__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 4px;
+    font-size: 0.78rem;
+    color: var(--text-2);
+}
+.comment-bbcode-help__item + .comment-bbcode-help__item {
+    border-top: 1px dashed var(--border);
+}
+.comment-bbcode-help__item code {
+    flex-shrink: 0;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--font-mono, ui-monospace, Consolas, monospace);
+    font-size: 0.74rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70%;
+}
+.comment-bbcode-help__item span {
+    color: var(--text-3);
+    white-space: nowrap;
+}
+
+/* 回复提示卡片 + 原评论引用 */
+.comment-reply-info {
+    display: block; /* 覆盖旧版水平排列：回复提示+取消在 bar 内横排，引用块换行 */
+    margin-top: 12px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-sm);
+    background: var(--bg-card-2);
+}
+.comment-reply-info__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+.comment-reply-info__text {
+    font-size: 0.82rem;
+    color: var(--text-2);
+}
+.comment-reply-info__text strong {
+    color: var(--text);
+}
+.comment-reply-cancel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text-3);
+    cursor: pointer;
+    padding: 0;
+    transition: background var(--transition), color var(--transition);
+}
+.comment-reply-cancel:hover {
+    background: var(--bg-hover);
+    color: var(--accent);
+}
+.comment-reply-quote {
+    margin: 8px 0 0;
+    padding: 2px 0;
+    max-height: 88px;
+    overflow-y: auto;
+    font-style: italic;
+    font-size: 0.78rem;
+    color: var(--text-3);
+    line-height: 1.6;
+    word-break: break-word;
+}
+
+/* 评论贴纸图片美化 */
+.comment-sticker {
+    display: inline-block;
+    max-width: 120px;
+    height: auto;
+    vertical-align: middle;
+    margin: 0 2px;
+    border-radius: 8px;
+}

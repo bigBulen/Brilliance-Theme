@@ -1,0 +1,160 @@
+/**
+ * Brilliance - 站点活跃热力图小工具
+ * assets/css/activity-heatmap.css
+ *
+ * 颜色遵循 main.css 全局变量体系：
+ * - 文章维度使用 --accent（主题强调色，暗/亮自动切换）
+ * - 说说 / 评论 / ACGN 维度按 [data-theme] 各自给一组协调色
+ * - 空格底色使用半透明灰，随主题自然变化
+ */
+
+.ah-widget {
+    --ah-cell: 12px;
+    --ah-gap: 3px;
+    --ah-pitch: calc(var(--ah-cell) + var(--ah-gap));
+    font-size: 12px;
+    color: var(--text-2);
+}
+
+[data-theme="dark"] .ah-widget {
+    --ah-post: var(--accent);
+    --ah-shuo: #46c483;
+    --ah-comment: #f2a65e;
+    --ah-acgn: #58a6ff;
+    --ah-empty: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="light"] .ah-widget {
+    --ah-post: var(--accent);
+    --ah-shuo: #2b9e52;
+    --ah-comment: #d9822b;
+    --ah-acgn: #0969da;
+    --ah-empty: rgba(0, 0, 0, 0.07);
+}
+
+/* 窄容器（副栏）中横向滚动查看完整 53 周 */
+.ah-scroll {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding-bottom: 2px;
+}
+
+.ah-body {
+    display: flex;
+    gap: 6px;
+}
+
+/* 星期标签列：对齐第 2 / 4 / 6 行（周一 / 周三 / 周五） */
+.ah-dow {
+    display: grid;
+    grid-template-rows: repeat(7, var(--ah-cell));
+    gap: var(--ah-gap);
+    margin-top: 27px; /* 让出顶部年份行 + 月份行高度 */
+    font-size: 9px;
+    line-height: var(--ah-cell);
+    color: var(--text-3);
+}
+.ah-dow span:nth-child(1) { grid-row: 2; }
+.ah-dow span:nth-child(2) { grid-row: 4; }
+.ah-dow span:nth-child(3) { grid-row: 6; }
+
+.ah-main {
+    flex: 0 0 auto;
+}
+
+/* 年份标记行：一月、首列、末列标注年份 */
+.ah-year {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: var(--ah-pitch);
+    height: 13px;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 9px;
+    color: var(--text-3);
+}
+
+/* 月份标记行：每格宽度与热力图列距一致 */
+.ah-months {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: var(--ah-pitch);
+    height: 12px;
+    margin-bottom: 2px;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 9px;
+    color: var(--text-3);
+}
+
+/* 热力图主体：列优先，7 行（周日~周六）× N 周 */
+.ah-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(7, var(--ah-cell));
+    grid-auto-columns: var(--ah-cell);
+    gap: var(--ah-gap);
+    width: max-content;
+}
+
+.ah-cell {
+    width: var(--ah-cell);
+    height: var(--ah-cell);
+    padding: 1px;
+    border-radius: 3px;
+    background: var(--ah-empty);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5px;
+    overflow: hidden;
+    transition: transform 0.12s ease;
+}
+.ah-cell:hover { transform: scale(1.25); }
+.ah-cell--pad { background: transparent; }
+
+/* 维度色条：一个单元格内最多 4 条（文章/说说/评论/ACGN），--o 由数量决定 */
+.ah-bar {
+    flex: 1 1 0;
+    min-height: 1px;
+    border-radius: 1px;
+    opacity: var(--o, 1);
+}
+
+.ah-bar--post    { background: var(--ah-post); }
+.ah-bar--shuo    { background: var(--ah-shuo); }
+.ah-bar--comment { background: var(--ah-comment); }
+.ah-bar--acgn    { background: var(--ah-acgn); }
+
+/* 图例与总计 */
+.ah-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    margin-top: 12px;
+    font-size: 11px;
+    color: var(--text-2);
+}
+.ah-legend__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+.ah-legend__item b {
+    color: var(--text);
+    font-weight: 600;
+}
+.ah-legend__swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+}
+
+.ah-note {
+    margin-top: 8px;
+    font-size: 10px;
+    color: var(--text-3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ah-cell { transition: none; }
+}

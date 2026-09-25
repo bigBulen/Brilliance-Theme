@@ -1,0 +1,235 @@
+/* ========== Prism 代码高亮自定义样式 ========== */
+
+/* 暗色/亮色主题适配 */
+[data-theme="light"] pre[class*="language-"],
+[data-theme="light"] code[class*="language-"] {
+    background: #f5f7fa !important;
+    color: #2d3748 !important;
+}
+
+[data-theme="light"] .token.comment,
+[data-theme="light"] .token.prolog,
+[data-theme="light"] .token.doctype,
+[data-theme="light"] .token.cdata {
+    color: #718096 !important;
+}
+
+[data-theme="light"] .token.punctuation {
+    color: #4a5568 !important;
+}
+
+[data-theme="light"] .token.property,
+[data-theme="light"] .token.tag,
+[data-theme="light"] .token.boolean,
+[data-theme="light"] .token.number,
+[data-theme="light"] .token.constant,
+[data-theme="light"] .token.symbol,
+[data-theme="light"] .token.deleted {
+    color: #c53030 !important;
+}
+
+[data-theme="light"] .token.selector,
+[data-theme="light"] .token.attr-name,
+[data-theme="light"] .token.string,
+[data-theme="light"] .token.char,
+[data-theme="light"] .token.builtin,
+[data-theme="light"] .token.inserted {
+    color: #2f855a !important;
+}
+
+[data-theme="light"] .token.operator,
+[data-theme="light"] .token.entity,
+[data-theme="light"] .token.url,
+[data-theme="light"] .language-css .token.string,
+[data-theme="light"] .style .token.string {
+    color: #d69e2e !important;
+}
+
+[data-theme="light"] .token.atrule,
+[data-theme="light"] .token.attr-value,
+[data-theme="light"] .token.keyword {
+    color: #5a67d8 !important;
+}
+
+[data-theme="light"] .token.function,
+[data-theme="light"] .token.class-name {
+    color: #d53f8c !important;
+}
+
+/* 代码块容器样式 */
+pre[class*="language-"] {
+    margin: 1.5rem 0 !important;
+    padding: 1.25rem !important;
+    border-radius: var(--radius-sm) !important;
+    border: 1px solid var(--border) !important;
+    overflow: auto !important;
+    font-size: 0.9rem !important;
+    line-height: 1.6 !important;
+    box-shadow: var(--shadow) !important;
+}
+
+code[class*="language-"],
+pre[class*="language-"] {
+    font-family: var(--font-mono) !important;
+    text-shadow: none !important;
+}
+
+/* 行内代码保持原有样式 */
+:not(pre) > code[class*="language-"] {
+    padding: 0.2em 0.4em !important;
+    background: var(--code-bg) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 4px !important;
+    font-size: 0.9em !important;
+    color: var(--text) !important;
+}
+
+/* 行号样式 */
+pre[class*="language-"].line-numbers {
+    padding-left: 3.8em !important;
+    counter-reset: linenumber;
+}
+
+pre[class*="language-"].line-numbers > code {
+    position: relative;
+    white-space: inherit;
+}
+
+.line-numbers .line-numbers-rows {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    font-size: 100%;
+    left: -3.8em;
+    width: 3em;
+    letter-spacing: -1px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    user-select: none;
+}
+
+[data-theme="light"] .line-numbers .line-numbers-rows {
+    border-right-color: rgba(0, 0, 0, 0.1);
+}
+
+.line-numbers-rows > span {
+    display: block;
+    counter-increment: linenumber;
+}
+
+.line-numbers-rows > span:before {
+    content: counter(linenumber);
+    color: var(--text-3);
+    display: block;
+    padding-right: 0.8em;
+    text-align: right;
+}
+
+/* 复制按钮样式 */
+div.code-toolbar {
+    position: relative;
+}
+
+div.code-toolbar > .toolbar {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity var(--transition);
+}
+
+div.code-toolbar:hover > .toolbar {
+    opacity: 1;
+}
+
+div.code-toolbar > .toolbar button {
+    padding: 0.4rem 0.8rem !important;
+    font-size: 0.8rem !important;
+    background: var(--bg-card) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    transition: background var(--transition), color var(--transition) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+div.code-toolbar > .toolbar button:hover {
+    background: var(--accent) !important;
+    color: #fff !important;
+    border-color: var(--accent) !important;
+}
+
+div.code-toolbar > .toolbar button:focus {
+    outline: none !important;
+}
+
+/* 折行控制 */
+pre[class*="language-"].wrap-lines {
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+}
+
+/* 滚动条样式 */
+pre[class*="language-"]::-webkit-scrollbar {
+    height: 8px;
+}
+
+pre[class*="language-"]::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+pre[class*="language-"]::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+pre[class*="language-"]::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="light"] pre[class*="language-"]::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] pre[class*="language-"]::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] pre[class*="language-"]::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* 语言标签 */
+pre[class*="language-"][data-language]::before {
+    content: attr(data-language);
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-3);
+    background: var(--bg-card-2);
+    border-bottom-left-radius: var(--radius-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    pre[class*="language-"] {
+        font-size: 0.85rem !important;
+        padding: 1rem !important;
+    }
+    
+    pre[class*="language-"].line-numbers {
+        padding-left: 3em !important;
+    }
+    
+    .line-numbers .line-numbers-rows {
+        left: -3em;
+        width: 2.5em;
+    }
+}

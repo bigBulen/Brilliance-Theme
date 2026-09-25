@@ -1,0 +1,78 @@
+/* 详情页头部「收录于足迹地图」提示 */
+
+.bm-entry-notice {
+    display: flex;
+    gap: 0.65rem;
+    margin: 1rem 0 0;
+    padding: 0.75rem 0.95rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    background: linear-gradient(180deg, rgba(124, 106, 247, 0.10), rgba(124, 106, 247, 0.03));
+    font-size: 0.86rem;
+    line-height: 1.55;
+    color: var(--text-2);
+}
+
+.bm-entry-notice__icon {
+    flex: 0 0 auto;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.bm-entry-notice__body {
+    min-width: 0;
+}
+
+.bm-entry-notice__text {
+    margin: 0;
+}
+
+.bm-entry-notice__lead {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.bm-entry-notice__cta {
+    margin-left: 0.35rem;
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.bm-entry-notice__cta:hover {
+    text-decoration: underline;
+}
+
+.bm-entry-notice__locs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.5rem;
+    margin-top: 0.45rem;
+}
+
+.bm-entry-notice__loc {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.12rem 0.55rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--bg-card);
+    color: var(--text-2);
+    font-size: 0.78rem;
+    text-decoration: none;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+a.bm-entry-notice__loc:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+@media (max-width: 640px) {
+    .bm-entry-notice {
+        padding: 0.65rem 0.75rem;
+        font-size: 0.82rem;
+    }
+}

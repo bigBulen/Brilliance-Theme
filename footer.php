@@ -1,0 +1,93 @@
+        </div><!-- .container -->
+    </div><!-- .site-content-wrap -->
+
+<footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+
+        <?php
+        $custom_html = get_option('mimosa_footer_custom_html', '');
+        if ($custom_html):
+        ?>
+        <div class="site-footer__custom">
+            <?php
+            $footer_allowed = wp_kses_allowed_html('post');
+            $footer_allowed['style'] = array('type' => true, 'media' => true);
+            $footer_allowed['script'] = array('type' => true, 'src' => true, 'defer' => true, 'async' => true, 'crossorigin' => true);
+            echo wp_kses($custom_html, $footer_allowed);
+            ?>
+        </div>
+        <?php endif; ?>
+
+        <?php
+        $word_count = function_exists('mimosa_get_site_word_count')
+            ? mimosa_get_site_word_count()
+            : '';
+        if ($word_count):
+        ?>
+        <p class="site-footer__words"><?php echo esc_html($word_count); ?></p>
+        <?php endif; ?>
+
+        <div>Theme <strong>Brilliance</strong> By <a href="https://loneapex.cn/" target="_blank">Mimosa233</a></div>
+
+    </div>
+
+
+
+</footer>
+
+</div><!-- .site-page -->
+
+
+<!-- 小播放器信息 -->
+<script>var meting_api='https://loneapex.cn/meting-api/?server=:server&type=:type&id=:id&auth=:auth&r=:r';</script>
+<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/Aplayer/APlayer.min.css">
+<script src="<?php echo get_template_directory_uri(); ?>/assets/Aplayer/APlayer.min.js"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/assets/Aplayer/Meting.min.js"></script>
+<meting-js
+    server="netease"
+    type="playlist"
+    id="8159389492"
+    fixed="true"
+    mini="true"
+    order="list"
+    loop="all"
+    preload="false"
+    list-folded="true"
+    lrc-type="1"
+></meting-js>
+
+
+
+<script>
+    console.log('brilliance - 一切准备就绪。');
+</script>
+
+<!-- 改写默认评论输入url提示 -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. 找到你的输入框，请修改 '.your-input-class' 为实际的 class 或 #id
+    var inputField = document.querySelector('#comment-url');
+
+    if (inputField) {
+        // 2. 监听 invalid 事件（当验证失败时触发）
+        inputField.addEventListener('invalid', function(e) {
+            // 3. 设置自定义的提示文字
+            if (this.value === '') {
+                this.setCustomValidity('请输入有效的 URL 地址');
+            } else {
+                // 如果是因为 pattern 不匹配等其他原因，也可以在这里定义
+                this.setCustomValidity('URL 格式不正确，开头须为 http(s)://');
+            }
+        });
+
+        // 4. 监听 input 事件，当用户开始输入时清除自定义错误，否则错误会一直卡住
+        inputField.addEventListener('input', function() {
+            this.setCustomValidity('');
+        });
+    }
+});
+</script>
+
+<?php wp_footer(); ?>
+</body>
+</html>

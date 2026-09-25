@@ -1,0 +1,33 @@
+/* 动态印章背景：固定视口层，视差滚动 + 边界换行回收，保证每屏均匀 N 枚 */
+#mimosa-stamp-layer {
+    position: fixed;
+    inset: 0;
+    /* 作为 .site-page 的子层、位于页面内容之下（-1）：卡片不透明度能作用于贴纸；
+       配合 JS 的 clip-path 裁掉 Banner 区域。 */
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.mimosa-stamp {
+    position: absolute;
+    pointer-events: none;
+    --stamp-rot: 0deg;
+    --stamp-dur: 10s;
+    animation: mimosa-stamp-float var(--stamp-dur) ease-in-out infinite alternate;
+}
+
+.mimosa-stamp img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+[data-theme="dark"].mimosa-stamp-invert .mimosa-stamp {
+    filter: invert(1);
+}
+
+@keyframes mimosa-stamp-float {
+    from { transform: translateY(-10px) rotate(var(--stamp-rot)); }
+    to   { transform: translateY(10px) rotate(var(--stamp-rot)); }
+}

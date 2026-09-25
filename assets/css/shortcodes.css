@@ -1,0 +1,473 @@
+/* ========== Brilliance 短代码样式 ========== */
+
+/* Checkbox / Todo */
+.shortcode-todo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+}
+
+.shortcode-todo.inline {
+    display: inline-flex;
+    margin: 0 0.5rem;
+}
+
+.shortcode-todo input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--accent);
+}
+
+.shortcode-todo label {
+    cursor: pointer;
+    user-select: none;
+    color: var(--text);
+    margin: 0;
+}
+
+/* Alert 提示框 */
+.alert {
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    border-radius: var(--radius-sm);
+    border-left: 4px solid;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background: var(--bg-card-2);
+}
+
+.alert-primary {
+    border-left-color: var(--accent);
+    background: rgba(var(--accent-rgb), 0.1);
+}
+
+.alert-success {
+    border-left-color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.alert-danger {
+    border-left-color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.alert-warning {
+    border-left-color: #f59e0b;
+    background: rgba(245, 158, 11, 0.1);
+}
+
+.alert-info {
+    border-left-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.alert-inner--icon {
+    flex-shrink: 0;
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+.alert-inner--text {
+    flex: 1;
+    line-height: 1.6;
+}
+
+/* Admonition 警告框 */
+.admonition {
+    margin: 1.5rem 0;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+.admonition-title {
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.admonition-body {
+    padding: 1rem;
+    background: var(--bg-card);
+}
+
+.admonition-primary .admonition-title {
+    background: rgba(var(--accent-rgb), 0.15);
+    color: var(--accent);
+}
+
+.admonition-success .admonition-title {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+}
+
+.admonition-danger .admonition-title {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+}
+
+.admonition-warning .admonition-title {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+}
+
+.admonition-info .admonition-title {
+    background: rgba(59, 130, 246, 0.15);
+    color: #3b82f6;
+}
+
+.admonition-grey .admonition-title {
+    background: var(--bg-card-2);
+    color: var(--text-2);
+}
+
+/* Collapse 折叠块 */
+.collapse-block {
+    margin: 1.5rem 0;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: all var(--transition);
+}
+
+.collapse-block-title {
+    padding: 0.75rem 1rem;
+    background: var(--bg-card-2);
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    transition: background var(--transition);
+}
+
+.collapse-block-title:hover {
+    background: var(--bg-hover);
+}
+
+.collapse-block-title-inner {
+    flex: 1;
+}
+
+.collapse-icon {
+    transition: transform var(--transition);
+    font-size: 1.2rem;
+    color: var(--text-3);
+}
+
+.collapse-block.collapsed .collapse-icon {
+    transform: rotate(-90deg);
+}
+
+.collapse-block-body {
+    padding: 1rem;
+    background: var(--bg-card);
+}
+
+/* 带颜色的折叠块 */
+.collapse-block-primary {
+    border-left: 3px solid var(--accent);
+}
+
+.collapse-block-success {
+    border-left: 3px solid #10b981;
+}
+
+.collapse-block-danger {
+    border-left: 3px solid #ef4444;
+}
+
+.collapse-block-warning {
+    border-left: 3px solid #f59e0b;
+}
+
+.collapse-block-info {
+    border-left: 3px solid #3b82f6;
+}
+
+/* Spoiler 高斯模糊隐藏文本 */
+.brilliance-spoiler {
+    display: inline;
+    padding: 2px 4px;
+    background: var(--bg-card-2);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all var(--transition);
+    filter: blur(5px);
+    user-select: none;
+}
+
+.brilliance-spoiler:hover,
+.brilliance-spoiler.revealed {
+    filter: blur(0);
+    user-select: text;
+}
+
+/* Black 黑幕隐藏文本 */
+.brilliance-black {
+    display: inline;
+    padding: 2px 4px;
+    background: var(--text);
+    color: var(--text);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all var(--transition);
+    user-select: none;
+}
+
+.brilliance-black:hover,
+.brilliance-black.revealed {
+    color: var(--bg);
+    user-select: text;
+}
+
+/* Timeline 时间轴（简化版） */
+.brilliance-timeline {
+    position: relative;
+    padding: 1rem 0 1rem 2rem;
+    margin: 1.5rem 0;
+}
+
+.brilliance-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border-2);
+}
+
+.brilliance-timeline-item {
+    position: relative;
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.brilliance-timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2rem;
+    top: 0.75rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--border);
+}
+
+.brilliance-timeline-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: var(--text);
+}
+
+.brilliance-timeline-content {
+    color: var(--text-2);
+    line-height: 1.6;
+}
+
+/* ACGN 短代码卡片 */
+.brilliance-acgn-card {
+    margin: 1.5rem 0;
+}
+
+.article-single__content .brilliance-acgn-card,
+.page-single__content .brilliance-acgn-card {
+    display: block;
+    margin: 1.75rem 0;
+}
+
+.article-single__content .brilliance-acgn-card .feed-card,
+.page-single__content .brilliance-acgn-card .feed-card {
+    margin: 0;
+}
+
+.article-single__content .brilliance-acgn-card .media-preview-card,
+.page-single__content .brilliance-acgn-card .media-preview-card {
+    display: flex;
+    align-items: stretch;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.article-single__content .brilliance-acgn-card .media-preview-card:hover,
+.page-single__content .brilliance-acgn-card .media-preview-card:hover {
+    text-decoration: none;
+}
+
+.article-single__content .brilliance-acgn-card .media-preview-card__cover,
+.page-single__content .brilliance-acgn-card .media-preview-card__cover {
+    flex: 0 0 190px;
+}
+
+.article-single__content .brilliance-acgn-card .media-preview-card__cover img,
+.page-single__content .brilliance-acgn-card .media-preview-card__cover img {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border-radius: 0;
+}
+
+.article-single__content .brilliance-acgn-card .media-preview-card__info,
+.page-single__content .brilliance-acgn-card .media-preview-card__info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.article-single__content .brilliance-acgn-card .media-preview-card__info > *,
+.page-single__content .brilliance-acgn-card .media-preview-card__info > * {
+    margin: 0;
+}
+
+.article-single__content .brilliance-acgn-card .media-preview-card__title,
+.page-single__content .brilliance-acgn-card .media-preview-card__title {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.article-single__content .brilliance-acgn-card .media-preview-card__read-more,
+.page-single__content .brilliance-acgn-card .media-preview-card__read-more {
+    margin-top: 6px;
+}
+
+@media (max-width: 768px) {
+    .article-single__content .brilliance-acgn-card .media-preview-card,
+    .page-single__content .brilliance-acgn-card .media-preview-card {
+        flex-direction: column;
+    }
+
+    .article-single__content .brilliance-acgn-card .media-preview-card__cover,
+    .page-single__content .brilliance-acgn-card .media-preview-card__cover {
+        flex-basis: auto;
+    }
+}
+
+/* Label 标签 */
+.badge {
+    display: inline-block;
+    padding: 0.25em 0.6em;
+    font-size: 0.85em;
+    font-weight: 600;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+}
+
+.badge-primary {
+    background-color: var(--accent);
+}
+
+.badge-success {
+    background-color: #10b981;
+}
+
+.badge-danger {
+    background-color: #ef4444;
+}
+
+.badge-warning {
+    background-color: #f59e0b;
+    color: #000;
+}
+
+.badge-info {
+    background-color: #3b82f6;
+}
+
+.badge-pill {
+    border-radius: 10rem;
+}
+
+/* Progress Bar 进度条 */
+.progress-wrapper {
+    margin: 1rem 0;
+}
+
+.progress-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.progress-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text);
+}
+
+.progress-percentage {
+    font-size: 0.85rem;
+    color: var(--text-3);
+}
+
+.progress {
+    height: 8px;
+    background: var(--bg-card-2);
+    border-radius: 10rem;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 10rem;
+    transition: width 0.6s ease;
+}
+
+.progress-bar.bg-success {
+    background: #10b981;
+}
+
+.progress-bar.bg-danger {
+    background: #ef4444;
+}
+
+.progress-bar.bg-warning {
+    background: #f59e0b;
+}
+
+.progress-bar.bg-info {
+    background: #3b82f6;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .alert,
+    .admonition,
+    .collapse-block {
+        margin: 1rem 0;
+    }
+    
+    .alert {
+        padding: 0.75rem 1rem;
+    }
+    
+    .admonition-title,
+    .collapse-block-title {
+        padding: 0.6rem 0.85rem;
+        font-size: 0.9rem;
+    }
+    
+    .admonition-body,
+    .collapse-block-body {
+        padding: 0.75rem 0.85rem;
+    }
+}

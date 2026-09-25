@@ -1,0 +1,68 @@
+/* Global toast notifications */
+.mimosa-toast-stack { position: fixed; top: 1.25rem; right: 1.25rem; z-index: 20000; display: grid; gap: 0.7rem; width: min(360px, calc(100vw - 2rem)); pointer-events: none; }
+.mimosa-toast { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.9rem 1rem; border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: var(--radius-sm); background: var(--bg-card); box-shadow: var(--shadow-card); color: var(--text); opacity: 0; transform: translateX(1.25rem); transition: opacity .2s ease, transform .2s ease; pointer-events: auto; }
+.mimosa-toast.is-visible { opacity: 1; transform: translateX(0); }
+.mimosa-toast--success { border-left-color: #32a269; }
+.mimosa-toast--error { border-left-color: #dc4c64; }
+.mimosa-toast--info { border-left-color: var(--accent); }
+.mimosa-toast__message { flex: 1; line-height: 1.5; font-size: .9rem; }
+.mimosa-toast__close { padding: 0; border: 0; background: transparent; color: var(--text-3); font-size: 1.1rem; line-height: 1; cursor: pointer; }
+
+/* Character captcha */
+.mimosa-captcha-modal { position: fixed; inset: 0; z-index: 11000; display: none; align-items: center; justify-content: center; padding: 1rem; }
+.mimosa-captcha-modal.is-open { display: flex; }
+.mimosa-captcha-modal__backdrop { position: absolute; inset: 0; background: rgba(8, 10, 16, .66); backdrop-filter: blur(4px); }
+.mimosa-captcha-modal__dialog { position: relative; z-index: 1; width: min(720px, 100%); max-height: calc(100vh - 2rem); overflow: auto; padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--bg-card); box-shadow: 0 24px 80px rgba(0,0,0,.35); }
+.mimosa-captcha-modal__close { position: absolute; top: .85rem; right: .85rem; width: 32px; height: 32px; border: 0; border-radius: 50%; background: var(--bg-hover); color: var(--text-2); cursor: pointer; font-size: 1.3rem; }
+.mimosa-captcha-modal__eyebrow { margin: 0 0 .35rem; color: var(--accent); font-size: .72rem; font-weight: 800; letter-spacing: .14em; }
+.mimosa-captcha-modal h3 { margin: 0; color: var(--text); font-size: 1.35rem; }
+.mimosa-captcha-modal__hint { margin: .55rem 0 1.2rem; color: var(--text-2); }
+.mimosa-captcha-modal__hair { color: var(--accent); font-weight: 800; }
+.mimosa-captcha-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; }
+.mimosa-captcha-card {
+    display: block;
+    overflow: hidden;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: var(--radius-sm);
+    background: var(--bg-card-2);
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.mimosa-captcha-card > img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+.mimosa-captcha-card__caption {
+    display: none;
+    width: 100%;
+    min-height: 2.5rem;
+    padding: .4rem .55rem .5rem;
+    color: var(--text-2);
+    font-size: .72rem;
+    line-height: 1.4;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+.mimosa-captcha-card__caption strong { display: block; color: var(--text); font-size: .78rem; }
+.mimosa-captcha-card:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--accent); box-shadow: var(--shadow-card); }
+.mimosa-captcha-card.is-selected { border-color: var(--accent); }
+.mimosa-captcha-card.is-correct {
+    border-color: #32a269 !important;
+    box-shadow: 0 0 0 2px rgba(50, 162, 105, .24), 0 0 18px rgba(50, 162, 105, .36) !important;
+}
+.mimosa-captcha-card.is-wrong {
+    border-color: #dc4c64 !important;
+    box-shadow: 0 0 0 2px rgba(220, 76, 100, .22), 0 0 18px rgba(220, 76, 100, .32) !important;
+}
+.mimosa-captcha-card.is-revealed .mimosa-captcha-card__caption { display: block; }
+.mimosa-captcha-modal__actions { display: flex; justify-content: flex-end; gap: .65rem; margin-top: 1.25rem; }
+.mimosa-captcha-action { padding: .6rem 1rem; border: 1px solid var(--border-2); border-radius: var(--radius-sm); background: var(--bg-card); color: var(--text-2); cursor: pointer; }
+.mimosa-captcha-action--retry { border-color: var(--accent); color: var(--accent); }
+.comment-captcha-btn { display: inline-flex; align-items: center; gap: .4rem; padding: .55rem .8rem; border: 1px solid var(--accent); border-radius: var(--radius-sm); background: rgba(var(--accent-rgb), .1); color: var(--accent); font-weight: 700; cursor: pointer; }
+.comment-captcha-btn.is-verified { border-color: #32a269; background: rgba(50,162,105,.1); color: #258052; }
+@media (max-width: 540px) { .mimosa-captcha-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .mimosa-toast-stack { top: .75rem; right: .75rem; } }

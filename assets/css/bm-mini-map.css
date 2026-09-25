@@ -1,0 +1,55 @@
+/* 足迹小地图（侧边栏 Widget 静态展示） */
+
+.bm-mini-map-widget {
+    position: relative;
+}
+
+.bm-mini-map__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.bm-mini-map {
+    height: 200px;
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    background: var(--bg-card);
+    z-index: 0;
+}
+
+.bm-mini-map .leaflet-container {
+    border-radius: inherit;
+    background: var(--bg-card);
+}
+
+.bm-mini-map__more {
+    display: block;
+    margin-top: 6px;
+    text-align: right;
+    font-size: 0.75rem;
+    color: var(--text-3);
+    transition: color 0.15s ease;
+}
+
+.bm-mini-map__link:hover .bm-mini-map__more {
+    color: var(--accent);
+}
+
+/* Gutenberg 区块容器（brilliance/map） */
+.brilliance-block-mini-map {
+    margin: 1.25rem 0;
+    max-width: 460px;
+}
+
+.brilliance-block-mini-map .bm-mini-map {
+    height: 240px;
+}
+
+@media (max-width: 640px) {
+    .bm-mini-map { height: 170px; }
+    .brilliance-block-mini-map { max-width: 100%; }
+    .brilliance-block-mini-map .bm-mini-map { height: 200px; }
+}

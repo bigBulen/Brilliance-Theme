@@ -1,0 +1,23 @@
+/*
+ * Gutenberg Rich Text Format: Argon Hidden Text
+ * Editor Styles
+ */
+.argon-hidden-text {
+	transition: all 0.3s ease;
+}
+.argon-hidden-text.argon-hidden-text-blur {
+	filter: blur(4px);
+}
+.argon-hidden-text.argon-hidden-text-blur:hover {
+	filter: blur(0px);
+}
+.argon-hidden-text.argon-hidden-text-background {
+	background: #000;
+	color: transparent;
+	border-radius: 1px;
+}
+.argon-hidden-text.argon-hidden-text-background:hover {
+	background: transparent;
+	color: inherit;
+	border-radius: 0px;
+}

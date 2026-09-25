@@ -1,0 +1,140 @@
+/* Reaction bar */
+.article-single__reactions,
+.shuoshuo-detail__reactions {
+    margin-top: 1.25rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.mimosa-reactions {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 100%;
+}
+
+.mimosa-reactions__list {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.mimosa-reactions__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.28rem 0.65rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--bg-card-2);
+    color: var(--text-2);
+    font-size: 0.9rem;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.mimosa-reactions__emoji {
+    font-size: 0.95rem;
+}
+
+.mimosa-reactions__count {
+    font-variant-numeric: tabular-nums;
+}
+
+.mimosa-reactions__picker-wrap {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.mimosa-reactions__trigger {
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--bg-card-2);
+    color: var(--text);
+    line-height: 1;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color var(--transition), border-color var(--transition), color var(--transition), transform var(--transition);
+}
+
+.mimosa-reactions__trigger:hover,
+.mimosa-reactions__trigger.is-open {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.mimosa-reactions__popover {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 0.5rem);
+    z-index: 20;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    padding: 0.55rem;
+    min-width: 12rem;
+    max-width: min(18rem, calc(100vw - 2rem));
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-card);
+}
+
+.mimosa-reactions__popover[hidden] {
+    display: none !important;
+}
+
+.mimosa-reactions__choice {
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding: 0 0.5rem;
+    border: 1px solid transparent;
+    border-radius: 0.55rem;
+    background: var(--bg-card-2);
+    cursor: pointer;
+    font-size: 1.05rem;
+    line-height: 1;
+    transition: background-color var(--transition), border-color var(--transition), transform var(--transition);
+}
+
+.mimosa-reactions__choice:hover {
+    background: var(--bg-hover);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .article-single__reactions,
+    .shuoshuo-detail__reactions {
+        margin-top: 1rem;
+    }
+
+    .mimosa-reactions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .mimosa-reactions__popover {
+        right: -0.25rem;
+    }
+}
+
+/* Reaction 区域整体与上方内容的间距 */
+.mimosa-reactions {
+    margin-top: 2.5rem; /* 拉大与上方部分的距离 */
+    padding-top: 1.5rem; /* 内部上方留白 */
+    border-top: 1px solid #73747e; /* 小分割线，浅灰色 */
+}
+
+/* "添加一个reaction吧！" 提示文字降低透明度 */
+.mimosa-reactions__empty {
+    display: block;
+    text-align: center;
+    opacity: 0.5; /* 变浅，可根据需要调整为 0.3-0.6 之间 */
+}

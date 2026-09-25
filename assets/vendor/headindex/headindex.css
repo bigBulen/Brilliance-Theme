@@ -1,0 +1,61 @@
+/* Brilliance 文章目录（详情页侧栏内，无悬浮/模态） */
+
+/* 目录滚动容器（headindex.js 依赖该类名做滚动联动） */
+.brilliance-toc-scroll {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(100vh - var(--header-h) - 180px);
+    padding: 0.5rem 0;
+    scrollbar-width: thin;
+}
+
+.index-box {
+    width: 100%;
+    height: auto;
+    background-color: transparent;
+}
+
+.index-box ul {
+    padding: 0;
+    list-style: none;
+    margin: 0;
+}
+
+.index-box .index-subItem-box {
+    display: none;
+}
+
+.index-box .index-item,
+.index-box .index-link {
+    width: 100%;
+    display: block;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.index-box .index-link {
+    padding: 6px 12px 6px 16px;
+    cursor: pointer;
+    transition: background-color var(--transition), border-left-color var(--transition);
+    border-left: 3px solid transparent;
+    word-break: break-all;
+    color: var(--text-2);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.index-box .index-item.current > .index-link {
+    background-color: var(--bg-hover);
+    border-left-color: var(--accent);
+    color: var(--text);
+    font-weight: 500;
+}
+
+.index-box .index-link:hover {
+    background-color: var(--bg-hover);
+    color: var(--text);
+}
+
+.index-box .index-subItem-box .index-item {
+    padding-left: 1em;
+}

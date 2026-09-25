@@ -1,0 +1,217 @@
+.timeline-admin-container {
+    margin-top: 20px;
+}
+
+.timeline-admin-header {
+    margin-bottom: 16px;
+}
+
+.timeline-modal {
+    position: fixed;
+    z-index: 100000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+body.timeline-modal-open {
+    overflow: hidden;
+}
+
+.timeline-modal-content {
+    background: #fff;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 640px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.timeline-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #dcdcde;
+}
+
+.timeline-modal-header h2 {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+.timeline-modal-close {
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    color: #646970;
+    padding: 4px 8px;
+    border-radius: 2px;
+}
+
+.timeline-modal-close:hover {
+    color: #1d2327;
+    background: #f0f0f1;
+}
+
+.timeline-modal-body {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.timeline-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 16px 20px;
+    border-top: 1px solid #dcdcde;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="month"],
+.form-group input[type="time"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    max-width: 100%;
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.form-row .form-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.date-mode-panel .description {
+    margin: 8px 0 0;
+    color: #646970;
+    font-size: 12px;
+}
+
+.field-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.date-type-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.date-type-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    font-weight: normal;
+    margin: 0;
+}
+
+.date-type-option input {
+    margin: 0;
+}
+
+.date-type-option:has(input:checked) {
+    border-color: #2271b1;
+    background: #f0f6fc;
+}
+
+.date-range-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.date-range-row .form-group {
+    flex: 1;
+    min-width: 180px;
+    margin-bottom: 0;
+}
+
+.date-range-separator {
+    padding-bottom: 10px;
+    color: #646970;
+    font-weight: 600;
+}
+
+.date-mode-panel[hidden] {
+    display: none !important;
+}
+
+.date-type-badge {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 1px 6px;
+    font-size: 11px;
+    font-weight: normal;
+    border-radius: 3px;
+    background: #f0f0f1;
+    color: #50575e;
+}
+
+.date-type-badge-month {
+    background: #fcf0e3;
+    color: #996800;
+}
+
+.date-type-badge-range {
+    background: #e7f5fe;
+    color: #0073aa;
+}
+
+.event-time-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.all-day-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: normal;
+    margin: 0;
+}
+
+.status-published {
+    color: #00a32a;
+}
+
+.status-draft {
+    color: #dba617;
+}

@@ -1,0 +1,431 @@
+/* Argon Timeline Calendar Styles */
+.argon-timeline-calendar {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.argon-timeline-calendar .timeline-container {
+    position: relative;
+    padding-left: 30px;
+}
+
+.argon-timeline-calendar .timeline-container::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #667eea 0%, #7ce24e 100%);
+    border-radius: 1px;
+}
+
+/* 年份分组 */
+.argon-timeline-calendar .timeline-year-group {
+    margin-bottom: 40px;
+}
+
+.argon-timeline-calendar .timeline-year-header {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-size: 28px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    padding: 8px 15px 8px 20px;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 20px;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+}
+
+html.darkmode .argon-timeline-calendar .timeline-year-header {
+    color: #d8b66f !important;
+}
+
+.argon-timeline-calendar .timeline-year-header::before {
+    content: '';
+    position: absolute;
+    left: -23px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    background: linear-gradient(135deg, #667eea 0%, #7ce24e 100%);
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+    box-sizing: border-box;
+}
+
+/* 月份标题 */
+.argon-timeline-calendar .timeline-month-header {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-size: 18px;
+    font-weight: 600;
+    color: #34495e;
+    margin: 25px 0 15px 20px;
+    padding: 8px 15px;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 20px;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+}
+
+html.darkmode .argon-timeline-calendar .timeline-month-header {
+    color: #a7c5de !important;
+    background: rgba(102, 126, 234, 0.2) !important;
+}
+
+.argon-timeline-calendar .timeline-month-header::before {
+    content: '';
+    position: absolute;
+    left: -31px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    background: #667eea;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-sizing: border-box;
+}
+
+/* 折叠：仅用 class 控制，避免与 slide 动画冲突 */
+.argon-timeline-calendar .timeline-year-collapsed > .timeline-year-events {
+    display: none;
+}
+
+.argon-timeline-calendar .timeline-month-collapsed > .timeline-month-events {
+    display: none;
+}
+
+/* 时间轴项目 */
+.argon-timeline-calendar .timeline-item {
+    position: relative;
+    margin-bottom: 30px;
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: argonTimelineSlideInLeft 0.6s ease forwards;
+}
+
+.argon-timeline-calendar .timeline-item:nth-child(even) {
+    animation-delay: 0.1s;
+}
+
+.argon-timeline-calendar .timeline-item:nth-child(odd) {
+    animation-delay: 0.2s;
+}
+
+@keyframes argonTimelineSlideInLeft {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.argon-timeline-calendar .timeline-marker {
+    position: absolute;
+    left: -23px;
+    top: 20px;
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px;
+    min-height: 16px;
+    max-width: 16px;
+    max-height: 16px;
+    padding: 0;
+    margin: 0;
+    background: #fff;
+    border: 3px solid #667eea;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.argon-timeline-calendar .timeline-marker i {
+    font-size: 8px !important;
+    line-height: 1;
+    color: #667eea;
+    transition: color 0.3s ease;
+}
+
+.argon-timeline-calendar .timeline-item:hover .timeline-marker {
+    border-color: #764ba2;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+}
+
+.argon-timeline-calendar .timeline-item:hover .timeline-marker i {
+    color: #764ba2;
+}
+
+.argon-timeline-calendar .timeline-content {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-left: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(102, 126, 234, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.argon-timeline-calendar .timeline-content::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 20px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid #fff;
+}
+
+.argon-timeline-calendar .timeline-item:hover .timeline-content {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.argon-timeline-calendar .timeline-date {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.argon-timeline-calendar .timeline-date-fuzzy {
+    margin-left: 4px;
+    font-size: 12px;
+    color: #996800;
+    font-weight: normal;
+}
+
+.argon-timeline-calendar .timeline-item-month .timeline-date {
+    color: #996800;
+}
+
+.argon-timeline-calendar .timeline-item-range .timeline-date {
+    color: #0073aa;
+}
+
+.argon-timeline-calendar .timeline-time {
+    margin-left: 10px;
+    padding: 2px 8px;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 10px;
+    font-size: 12px;
+    color: #667eea;
+}
+
+.argon-timeline-calendar .timeline-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0 0 10px 0;
+    line-height: 1.4;
+}
+
+.argon-timeline-calendar .timeline-description {
+    color: #5a6c7d;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.argon-timeline-calendar .timeline-description p {
+    margin: 0 0 10px 0;
+}
+
+.argon-timeline-calendar .timeline-category {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.argon-timeline-calendar .category-game {
+    background: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+}
+
+.argon-timeline-calendar .category-exhibition {
+    background: rgba(52, 152, 219, 0.1);
+    color: #3498db;
+}
+
+.argon-timeline-calendar .category-conference {
+    background: rgba(155, 89, 182, 0.1);
+    color: #9b59b6;
+}
+
+.argon-timeline-calendar .category-general {
+    background: rgba(149, 165, 166, 0.1);
+    color: #95a5a6;
+}
+
+/* 折叠箭头 */
+.argon-timeline-calendar .timeline-year-toggle,
+.argon-timeline-calendar .timeline-month-toggle {
+    float: none;
+    margin-left: 8px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.argon-timeline-calendar .timeline-year-toggle::before {
+    content: '▾';
+    font-size: 16px;
+    color: #ba8e30;
+}
+
+.argon-timeline-calendar .timeline-year-collapsed .timeline-year-toggle::before {
+    content: '▸';
+}
+
+.argon-timeline-calendar .timeline-month-toggle::before {
+    content: '▾';
+    font-size: 14px;
+    color: #ba8e30;
+}
+
+.argon-timeline-calendar .timeline-month-collapsed .timeline-month-toggle::before {
+    content: '▸';
+}
+
+html.darkmode .argon-timeline-calendar .timeline-year-toggle::before,
+html.darkmode .argon-timeline-calendar .timeline-month-toggle::before {
+    color: #d8b66f;
+}
+
+/* 空状态 */
+.timeline-calendar-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #7f8c8d;
+    font-size: 16px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .argon-timeline-calendar {
+        padding: 15px;
+    }
+
+    .argon-timeline-calendar .timeline-container {
+        padding-left: 25px;
+    }
+
+    .argon-timeline-calendar .timeline-container::before {
+        left: 12px;
+    }
+
+    .argon-timeline-calendar .timeline-year-header {
+        font-size: 24px;
+        padding-left: 15px;
+    }
+
+    .argon-timeline-calendar .timeline-year-header::before {
+        left: -20px;
+        width: 14px;
+        height: 14px;
+    }
+
+    .argon-timeline-calendar .timeline-month-header {
+        font-size: 16px;
+        margin-left: 15px;
+    }
+
+    .argon-timeline-calendar .timeline-month-header::before {
+        left: -28px;
+        width: 8px;
+        height: 8px;
+    }
+
+    .argon-timeline-calendar .timeline-marker {
+        left: -20px;
+        width: 14px !important;
+        height: 14px !important;
+        min-width: 14px;
+        min-height: 14px;
+        max-width: 14px;
+        max-height: 14px;
+    }
+
+    .argon-timeline-calendar .timeline-marker i {
+        font-size: 7px !important;
+    }
+
+    .argon-timeline-calendar .timeline-content {
+        margin-left: 15px;
+        padding: 15px;
+    }
+
+    .argon-timeline-calendar .timeline-content::before {
+        left: -7px;
+        border-right-width: 7px;
+        border-top-width: 7px;
+        border-bottom-width: 7px;
+    }
+
+    .argon-timeline-calendar .timeline-title {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .argon-timeline-calendar .timeline-year-header {
+        font-size: 20px;
+    }
+
+    .argon-timeline-calendar .timeline-month-header {
+        font-size: 14px;
+    }
+
+    .argon-timeline-calendar .timeline-title {
+        font-size: 15px;
+    }
+
+    .argon-timeline-calendar .timeline-content {
+        padding: 12px;
+    }
+}
+
+/* 加载动画 */
+.timeline-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.timeline-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(102, 126, 234, 0.1);
+    border-left: 4px solid #667eea;
+    border-radius: 50%;
+    animation: argonTimelineSpin 1s linear infinite;
+}
+
+@keyframes argonTimelineSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

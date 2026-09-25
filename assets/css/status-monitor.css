@@ -1,0 +1,149 @@
+/**
+ * Brilliance - 服务器状态监测小工具
+ * assets/css/status-monitor.css
+ *
+ * 颜色遵循 main.css 变量体系，并按 [data-theme] 给监测状态色（good/warn/bad）。
+ */
+
+.sm-widget {
+    font-size: 12px;
+    color: var(--text-2);
+    line-height: 1.5;
+}
+
+[data-theme="dark"] .sm-widget {
+    --sm-good: #3fb950;
+    --sm-warn: #d29922;
+    --sm-bad:  #f85149;
+    --sm-track: var(--bg-card-2);
+}
+
+[data-theme="light"] .sm-widget {
+    --sm-good: #2da44e;
+    --sm-warn: #bf8700;
+    --sm-bad:  #cf222e;
+    --sm-track: var(--bg-card-2);
+}
+
+/* 进度条网格 */
+.sm-grid {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.sm-item__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 6px;
+    margin-bottom: 5px;
+}
+
+.sm-item__label {
+    font-size: 11px;
+    color: var(--text-3);
+    flex-shrink: 0;
+}
+
+.sm-item__val {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    text-align: right;
+}
+
+.sm-item__sub {
+    display: block;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--text-3);
+    margin-top: 1px;
+}
+
+.sm-bar {
+    height: 6px;
+    background: var(--sm-track);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.sm-bar__fill {
+    display: block;
+    height: 100%;
+    width: calc(var(--p, 0) * 1%);
+    max-width: 100%;
+    border-radius: 999px;
+    transition: width 0.4s ease, background 0.2s ease;
+}
+
+/* 等级配色（进度条 + 数值文字） */
+.sm-item[data-level="good"] .sm-bar__fill { background: var(--sm-good); }
+.sm-item[data-level="warn"] .sm-bar__fill { background: var(--sm-warn); }
+.sm-item[data-level="bad"]  .sm-bar__fill { background: var(--sm-bad); }
+.sm-item[data-level="bad"]  .sm-item__val { color: var(--sm-bad); }
+.sm-item[data-level="warn"] .sm-item__val { color: var(--sm-warn); }
+
+/* 信息芯片行 */
+.sm-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.sm-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--bg-card-2);
+    border: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-2);
+}
+
+.sm-chip b {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.sm-chip__label {
+    color: var(--text-3);
+}
+
+.sm-chip__sub {
+    font-size: 10px;
+    color: var(--text-3);
+    margin-left: 2px;
+}
+
+/* 网络上下行 */
+.sm-chip--net .sm-arrow {
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1;
+}
+.sm-arrow--up   { color: var(--sm-good); }
+.sm-arrow--down { color: var(--sm-warn); }
+
+/* 延迟 / SSL 等级配色 */
+.sm-chip[data-level="good"] b { color: var(--sm-good); }
+.sm-chip[data-level="warn"] b { color: var(--sm-warn); }
+.sm-chip[data-level="bad"]  b { color: var(--sm-bad); }
+.sm-chip[data-level="bad"]  { border-color: color-mix(in srgb, var(--sm-bad) 45%, var(--border)); }
+
+.sm-note {
+    margin-top: 10px;
+    font-size: 10.5px;
+    color: var(--text-2);
+    text-align: right;
+}
+
+.sm-note1 {
+    margin-top: 10px;
+    font-size: 10.5px;
+    color: var(--text-3);
+    text-align: right;
+}

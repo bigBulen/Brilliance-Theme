@@ -1,0 +1,112 @@
+/* 古腾堡「关联地点」面板 */
+
+.bm-editor-panel .bm-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.bm-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    max-width: 100%;
+    padding: 3px 6px 3px 10px;
+    border-radius: 999px;
+    background: #f0f0f1;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.bm-chip__text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.bm-chip__x {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #757575;
+    padding: 0 2px;
+    font-size: 14px;
+    line-height: 1;
+    height: auto;
+    min-height: 0;
+}
+
+.bm-chip__x:hover {
+    color: #d63638;
+    background: none;
+}
+
+.bm-chips__empty {
+    color: #757575;
+    font-size: 12px;
+}
+
+.bm-searching {
+    display: flex;
+    justify-content: center;
+    padding: 4px 0;
+}
+
+.bm-results {
+    max-height: 240px;
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    margin-top: 6px;
+    background: #fff;
+}
+
+.bm-result {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 8px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f1;
+    margin: 0;
+}
+
+.bm-result:last-child {
+    border-bottom: none;
+}
+
+.bm-result:hover {
+    background: #f6f7f7;
+}
+
+.bm-result.is-on {
+    background: #f0f6fc;
+}
+
+.bm-result .components-checkbox-control {
+    margin: 0;
+}
+
+.bm-result__text {
+    min-width: 0;
+    font-size: 13px;
+}
+
+.bm-result__text small {
+    color: #757575;
+}
+
+.bm-results__empty {
+    padding: 10px;
+    margin: 0;
+    color: #757575;
+    font-size: 12px;
+    text-align: center;
+}
+
+.bm-panel-help {
+    color: #757575;
+    font-size: 11.5px;
+    margin-top: 8px;
+}

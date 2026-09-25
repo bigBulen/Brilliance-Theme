@@ -1,0 +1,96 @@
+/* 印象集「Toward Our Dream」 - 独立页面样式 */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #05060d;
+}
+
+body {
+    position: fixed;
+    inset: 0;
+    font-family: "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#impressions-canvas {
+    position: fixed;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+    touch-action: none;
+}
+
+#impressions-canvas.is-dragging {
+    cursor: grabbing;
+}
+
+.impressions-actions {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.impressions-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    background: rgba(10, 12, 22, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.impressions-btn:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.32);
+    background: rgba(16, 18, 32, 0.7);
+}
+
+.impressions-btn--icon {
+    padding: 9px 12px;
+}
+
+.impressions-hint {
+    position: fixed;
+    bottom: 34px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: rgba(10, 12, 22, 0.4);
+    color: rgba(255, 255, 255, 0.42);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+}
+
+.impressions-hint.show {
+    opacity: 1;
+}
