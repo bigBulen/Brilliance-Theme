@@ -15,6 +15,11 @@ class Apex_Media_List {
     const TABLE_ITEM_TAGS = 'brilliance_acgn_item_tags';
 
     public function __construct() {
+        // 新主名（brilliance_ 前缀）
+        add_shortcode('brilliance_anime_list', array($this, 'shortcode_anime'));
+        add_shortcode('brilliance_galgame_list', array($this, 'shortcode_galgame'));
+        add_shortcode('brilliance_reading_list', array($this, 'shortcode_reading'));
+        // 兼容旧名（apex_ 前缀），保证已有文章继续有效
         add_shortcode('apex_anime_list', array($this, 'shortcode_anime'));
         add_shortcode('apex_galgame_list', array($this, 'shortcode_galgame'));
         add_shortcode('apex_reading_list', array($this, 'shortcode_reading'));
@@ -138,7 +143,10 @@ class Apex_Media_List {
         if (!($current_post instanceof WP_Post)) {
             return false;
         }
-        return has_shortcode($current_post->post_content, 'apex_anime_list')
+        return has_shortcode($current_post->post_content, 'brilliance_anime_list')
+            || has_shortcode($current_post->post_content, 'brilliance_galgame_list')
+            || has_shortcode($current_post->post_content, 'brilliance_reading_list')
+            || has_shortcode($current_post->post_content, 'apex_anime_list')
             || has_shortcode($current_post->post_content, 'apex_galgame_list')
             || has_shortcode($current_post->post_content, 'apex_reading_list');
     }

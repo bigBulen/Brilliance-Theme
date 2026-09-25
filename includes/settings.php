@@ -208,12 +208,12 @@ function mimosa_settings_page() {
             <p>光晕启用时优先展示光晕。光晕关闭后，才使用当前亮/暗模式下的 Banner 背景图。</p>
             <table class="form-table">
                 <tr>
-                    <th><label for="mimosa_banner_bg_dark">暗色模式背景 URL</label></th>
+                    <th><label for="mimosa_banner_bg_dark">Banner暗色模式背景 URL</label></th>
                     <td><input type="url" id="mimosa_banner_bg_dark" name="mimosa_banner_bg_dark" class="regular-text"
                                value="<?php echo esc_attr(get_option('mimosa_banner_bg_dark', '')); ?>"></td>
                 </tr>
                 <tr>
-                    <th><label for="mimosa_banner_bg_light">浅色模式背景 URL</label></th>
+                    <th><label for="mimosa_banner_bg_light">Banner浅色模式背景 URL</label></th>
                     <td><input type="url" id="mimosa_banner_bg_light" name="mimosa_banner_bg_light" class="regular-text"
                                value="<?php echo esc_attr(get_option('mimosa_banner_bg_light', '')); ?>"></td>
                 </tr>
