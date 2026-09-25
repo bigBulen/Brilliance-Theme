@@ -8,8 +8,8 @@ if (!defined('ABSPATH')) exit;
 function mimosa_friendlinks_admin_menu() {
     // 独立顶级菜单，不再挂在「Brilliance 设置」下
     add_menu_page(
-        'Brilliance友链管理',
-        'Brilliance友链管理',
+        '友链管理',
+        '友链管理',
         'manage_options',
         'mimosa-friendlinks',
         'mimosa_friendlinks_admin_page',
