@@ -47,24 +47,6 @@ $impressions_config = array(
     <script src="<?php echo esc_url($impressions_js_src); ?>?ver=<?php echo esc_attr($impressions_js_ver); ?>"></script>
 
 
-    <!-- 其它的页面外挂HTML -->
-    <!-- 小播放器信息 -->
-    <script>var meting_api='https://loneapex.cn/meting-api/?server=:server&type=:type&id=:id&auth=:auth&r=:r';</script>
-    <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/Aplayer/APlayer.min.css">
-    <script src="<?php echo get_template_directory_uri(); ?>/assets/Aplayer/APlayer.min.js"></script>
-    <script src="<?php echo get_template_directory_uri(); ?>/assets/Aplayer/Meting.min.js"></script>
-    <meting-js
-        server="netease"
-        type="playlist"
-        id="8159389492"
-        fixed="true"
-        mini="true"
-        order="list"
-        loop="all"
-        preload="false"
-        list-folded="true"
-        lrc-type="1"
-    ></meting-js>
 
 </body>
 </html>

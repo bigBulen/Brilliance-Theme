@@ -6,13 +6,15 @@
 if (!defined('ABSPATH')) exit;
 
 function mimosa_friendlinks_admin_menu() {
-    add_submenu_page(
-        'mimosa-settings',
-        '友链管理',
-        '友链管理',
+    // 独立顶级菜单，不再挂在「Brilliance 设置」下
+    add_menu_page(
+        'Brilliance友链管理',
+        'Brilliance友链管理',
         'manage_options',
         'mimosa-friendlinks',
-        'mimosa_friendlinks_admin_page'
+        'mimosa_friendlinks_admin_page',
+        'dashicons-admin-links',
+        61
     );
 }
 add_action('admin_menu', 'mimosa_friendlinks_admin_menu');
@@ -103,7 +105,7 @@ function mimosa_friendlinks_admin_page() {
     ));
     ?>
     <div class="wrap">
-        <h1>友链管理</h1>
+        <h1>Brilliance友链管理</h1>
         
         <?php if ($message): ?>
             <?php if (isset($message['success'])): ?>
