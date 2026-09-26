@@ -198,6 +198,7 @@ Brilliance 并不是一个只能展示 ACGN 数据的「特殊主题」。
 ---
 
 ## 文档
+目前文档正在编写中……
 [使用文档](https://docs.loneapex.cn/)
 
 
