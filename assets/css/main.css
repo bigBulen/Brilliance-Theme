@@ -2172,7 +2172,6 @@ html.darkmode .annotation-popup {
 
 .home-sidebar .widget a,
 .mobile-menu-widgets .widget a {
-    color: var(--text-2);
     text-decoration: none;
     transition: color var(--transition);
 }
