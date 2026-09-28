@@ -324,7 +324,7 @@
 .article-single__content blockquote,
 .page-single__content blockquote {
     margin: 1.5rem 0;
-    padding: 1rem 1.25rem;
+    padding: 0.1rem 1.25rem;
     border-left: 4px solid var(--accent);
     background: var(--bg-card-2);
     border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
@@ -342,6 +342,7 @@
     font-family: var(--font-mono);
     font-size: 0.9em;
     line-height: 1.6;
+    font-style: italic;
 }
 
 .article-single__content code,

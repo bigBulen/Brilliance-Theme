@@ -85,9 +85,11 @@
 .mimosa-lightbox__container {
     position: relative;
     z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    place-items: center;
+    row-gap: 0.6rem;
     width: min(92vw, 1300px);
     height: min(88vh, 900px);
 }
@@ -219,6 +221,23 @@ body.mimosa-lightbox-open { overflow: hidden; }
     .mimosa-lightbox__zoom { bottom: 0; right: 0; }
     .mimosa-lightbox__thumbs { bottom: 3.2rem; }
 }
+
+/* 图片说明：未放大时显示在图片下方；再次点击进入放大态后隐藏 */
+.mimosa-lightbox__caption {
+    max-width: min(100%, 820px);
+    padding: 0.35rem 1rem;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    text-align: center;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.65);
+    pointer-events: none;
+}
+.mimosa-lightbox__caption:empty { display: none; }
+/* 放大态隐藏但保留占位，避免图片位置跳动 */
+.mimosa-lightbox.is-zoomed .mimosa-lightbox__caption { visibility: hidden; }
+/* 有说明时上移缩略图，避免与说明重叠 */
+.mimosa-lightbox.has-caption .mimosa-lightbox__thumbs { bottom: 6rem; }
 
 /* BBCode 帮助（评论区底部展开提示） */
 .comment-bbcode-help {

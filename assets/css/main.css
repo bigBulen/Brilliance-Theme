@@ -1146,6 +1146,176 @@ body:not(.home) .site-content-wrap {
 .shuoshuo-card__text p { margin: 0 0 6px; }
 .shuoshuo-card__text p:last-child { margin-bottom: 0; }
 
+/* ── 说说正文基础排版（预览卡片 + 详情卡片）：引用块 / 列表 / 代码块 / 表格 / 标题等 ──
+   预览卡片在首页与归档页渲染，而 article.css 只在单篇页加载，
+   因此这套样式放在全站加载的 main.css 里，两处共用。 */
+.shuoshuo-card__text a,
+.shuoshuo-detail__text a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+.shuoshuo-card__text a:hover,
+.shuoshuo-detail__text a:hover { text-decoration-thickness: 2px; }
+
+.shuoshuo-card__text mark,
+.shuoshuo-detail__text mark {
+    background: transparent;
+    color: var(--accent);
+    padding: 0;
+}
+
+.shuoshuo-card__text img,
+.shuoshuo-detail__text img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+}
+
+/* 标题 */
+.shuoshuo-card__text h2,
+.shuoshuo-detail__text h2 {
+    font-size: 1.4em;
+    font-weight: 700;
+    margin: 1.2em 0 0.6em;
+    padding-bottom: 0.35em;
+    border-bottom: 2px solid var(--border);
+    color: var(--text);
+}
+.shuoshuo-card__text h3,
+.shuoshuo-detail__text h3 {
+    font-size: 1.22em;
+    font-weight: 700;
+    margin: 1.1em 0 0.5em;
+    color: var(--text);
+}
+.shuoshuo-card__text h4,
+.shuoshuo-detail__text h4,
+.shuoshuo-card__text h5,
+.shuoshuo-detail__text h5,
+.shuoshuo-card__text h6,
+.shuoshuo-detail__text h6 {
+    font-size: 1.08em;
+    font-weight: 700;
+    margin: 1em 0 0.5em;
+    color: var(--text);
+}
+.shuoshuo-card__text > h2:first-child,
+.shuoshuo-detail__text > h2:first-child,
+.shuoshuo-card__text > h3:first-child,
+.shuoshuo-detail__text > h3:first-child,
+.shuoshuo-card__text > h4:first-child,
+.shuoshuo-detail__text > h4:first-child { margin-top: 0; }
+
+/* 引用块 */
+.shuoshuo-card__text blockquote,
+.shuoshuo-detail__text blockquote {
+    margin: 1em 0;
+    padding: 0.35em 1em;
+    border-left: 4px solid var(--accent);
+    background: var(--bg-card-2);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    color: var(--text-2);
+}
+.shuoshuo-card__text blockquote p,
+.shuoshuo-detail__text blockquote p { margin: 0.4em 0; }
+.shuoshuo-card__text blockquote p:first-child,
+.shuoshuo-detail__text blockquote p:first-child { margin-top: 0; }
+.shuoshuo-card__text blockquote p:last-child,
+.shuoshuo-detail__text blockquote p:last-child { margin-bottom: 0; }
+.shuoshuo-card__text blockquote cite,
+.shuoshuo-detail__text blockquote cite {
+    display: block;
+    margin-top: 0.4em;
+    font-size: 0.85em;
+    font-style: normal;
+    color: var(--text-3);
+}
+
+/* 代码块与行内代码 */
+.shuoshuo-card__text pre,
+.shuoshuo-detail__text pre {
+    margin: 1em 0;
+    padding: 0.9em 1em;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    line-height: 1.6;
+    -webkit-overflow-scrolling: touch;
+}
+.shuoshuo-card__text code,
+.shuoshuo-detail__text code {
+    padding: 0.15em 0.4em;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+}
+.shuoshuo-card__text pre code,
+.shuoshuo-detail__text pre code {
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    font-size: inherit;
+}
+
+/* 列表 */
+.shuoshuo-card__text ul,
+.shuoshuo-card__text ol,
+.shuoshuo-detail__text ul,
+.shuoshuo-detail__text ol {
+    margin: 0.9em 0;
+    padding-left: 1.7em;
+}
+.shuoshuo-card__text li,
+.shuoshuo-detail__text li { margin: 0.35em 0; }
+.shuoshuo-card__text li > ul,
+.shuoshuo-card__text li > ol,
+.shuoshuo-detail__text li > ul,
+.shuoshuo-detail__text li > ol { margin: 0.35em 0; }
+
+/* 表格 */
+.shuoshuo-card__text table,
+.shuoshuo-detail__text table {
+    width: 100%;
+    margin: 1em 0;
+    border-collapse: collapse;
+    font-size: 0.95em;
+}
+.shuoshuo-card__text th,
+.shuoshuo-card__text td,
+.shuoshuo-detail__text th,
+.shuoshuo-detail__text td {
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--border);
+    text-align: left;
+}
+.shuoshuo-card__text th,
+.shuoshuo-detail__text th {
+    background: var(--bg-card-2);
+    font-weight: 600;
+}
+
+/* 分隔线 */
+.shuoshuo-card__text hr,
+.shuoshuo-detail__text hr {
+    margin: 1.6em 0;
+    border: none;
+    border-top: 1px solid var(--border);
+}
+
+/* 首尾元素去掉多余外边距 */
+.shuoshuo-card__text > *:first-child,
+.shuoshuo-detail__text > *:first-child { margin-top: 0; }
+.shuoshuo-card__text > *:last-child,
+.shuoshuo-detail__text > *:last-child { margin-bottom: 0; }
+
 /* 说说折叠功能 */
 .shuoshuo-card__text.is-folded,
 .shuoshuo-detail__text.is-folded {

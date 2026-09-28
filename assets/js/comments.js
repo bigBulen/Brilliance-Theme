@@ -2,6 +2,7 @@
     'use strict';
 
     var images = [];
+    var captions = [];
     var currentIndex = 0;
     var zoomed = false;
     var panX = 0, panY = 0;
@@ -16,6 +17,7 @@
             '<div class="mimosa-lightbox__overlay"></div>' +
             '<div class="mimosa-lightbox__container" role="dialog" aria-modal="true" aria-label="图片预览">' +
             '<img class="mimosa-lightbox__img" src="" alt="" draggable="false">' +
+            '<div class="mimosa-lightbox__caption" aria-live="polite"></div>' +
             '<button type="button" class="mimosa-lightbox__close" aria-label="关闭">×</button>' +
             '<button type="button" class="mimosa-lightbox__prev" aria-label="上一张">‹</button>' +
             '<button type="button" class="mimosa-lightbox__next" aria-label="下一张">›</button>' +
@@ -92,6 +94,7 @@
         } else {
             $img.removeClass('is-zoomed').css('transform', '');
         }
+        $('#mimosa-lightbox').toggleClass('is-zoomed', zoomed);
         $('#mimosa-lightbox .mimosa-lightbox__zoom span').text(zoomed ? '－' : '＋');
     }
 
@@ -121,13 +124,16 @@
         $lightbox.find('.mimosa-lightbox__zoom span').text('＋');
         $lightbox.find('.mimosa-lightbox__counter').text((currentIndex + 1) + ' / ' + images.length).toggle(multiple);
         $lightbox.find('.mimosa-lightbox__prev, .mimosa-lightbox__next').toggle(multiple);
+        var caption = captions[currentIndex] || '';
+        $lightbox.find('.mimosa-lightbox__caption').text(caption);
+        $lightbox.toggleClass('has-caption', !!caption).removeClass('is-zoomed');
         renderThumbnails();
         $lightbox.addClass('is-open').attr('aria-hidden', 'false');
         $('body').addClass('mimosa-lightbox-open');
     }
 
     function closeLightbox() {
-        $('#mimosa-lightbox').removeClass('is-open').attr('aria-hidden', 'true');
+        $('#mimosa-lightbox').removeClass('is-open is-zoomed').attr('aria-hidden', 'true');
         $('body').removeClass('mimosa-lightbox-open');
         zoomed = false;
         panX = 0;
@@ -138,6 +144,21 @@
         if (window.MimosaToast) window.MimosaToast(message, type || 'info');
     }
 
+    // 取图片对应说明：说说卡片用 .shuoshuo-card__img-caption，正文图片用 figure > figcaption
+    function captionFor($img) {
+        var $link = $img.closest('.shuoshuo-card__img-link');
+        if ($link.length) {
+            var $cap = $link.find('.shuoshuo-card__img-caption').first();
+            if ($cap.length) return ($cap.text() || '').trim();
+        }
+        var $fig = $img.closest('figure');
+        if ($fig.length) {
+            var $fc = $fig.find('figcaption').first();
+            if ($fc.length) return ($fc.text() || '').trim();
+        }
+        return '';
+    }
+
     function initLightbox() {
         var selector = '.article-single__content img, .page-single__content img, .shuoshuo-card__img, .shuoshuo-detail__images img, .comment-content img';
         $(document).on('click', selector, function (event) {
@@ -146,13 +167,17 @@
             var $image = $(this);
             var $scope = $image.closest('.article-single__content, .page-single__content, .shuoshuo-card__images, .shuoshuo-detail__images, .comment-content');
             var $group = $scope.length ? $scope.find('img') : $image;
-            images = $group.map(function () {
-                return $(this).prop('currentSrc') || $(this).attr('src');
-            }).get().filter(Boolean);
+            var items = $group.map(function () {
+                var src = $(this).prop('currentSrc') || $(this).attr('src');
+                return src ? { src: src, caption: captionFor($(this)) } : null;
+            }).get().filter(function (it) { return !!it; });
+            images = items.map(function (it) { return it.src; });
+            captions = items.map(function (it) { return it.caption; });
             var src = $image.prop('currentSrc') || $image.attr('src');
             currentIndex = images.indexOf(src);
             if (currentIndex < 0) {
                 images = [src];
+                captions = [captionFor($image)];
                 currentIndex = 0;
             }
             renderLightbox();

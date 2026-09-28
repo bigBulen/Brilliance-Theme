@@ -8,7 +8,12 @@ $content     = get_the_content();
 $shuo_title = get_the_title();
 $date        = get_the_date('Y-m-d H:i:s');
 $datetime    = get_the_date('c');
-$avatar_url  = get_option('mimosa_avatar_url', '');
+// 头像使用发表作者的邮箱 Gravatar（经主题 Gravatar CDN 过滤），无邮箱时回退到站点头像
+$author_email = get_the_author_meta('user_email');
+$avatar_url   = $author_email ? get_avatar_url($author_email, array('size' => 112)) : '';
+if (!$avatar_url) {
+    $avatar_url = get_option('mimosa_avatar_url', '');
+}
 $author_name = get_bloginfo('name');
 $comment_num = get_comments_number($post_id);
 
@@ -37,9 +42,12 @@ if (preg_match_all('/<img[^>]+src=["\']([^"\']+)["\'][^>]*>/i', $html_no_fig, $b
     }
 }
 
-// 纯文本：剥离所有图片块与图片，避免说明文字混入正文
+// 纯文本：剥离图片块与图片，避免说明文字混入正文。
+// 仅移除「含图片」的 figure，保留表格/嵌入等非图片 figure，避免表格、视频被一并删掉。
 $display_content = wpautop(wp_kses_post($content));
-$display_content = preg_replace('/<figure[^>]*>.*?<\/figure>/is', '', $display_content);
+$display_content = preg_replace_callback('/<figure[^>]*>.*?<\/figure>/is', function ($m) {
+    return preg_match('/<img[^>]+>/i', $m[0]) ? '' : $m[0];
+}, $display_content);
 $display_content = preg_replace('/<img[^>]+>/i', '', $display_content);
 $display_content = preg_replace('/<p[^>]*>\s*<\/p>/', '', $display_content);
 $text_content    = trim($display_content);
