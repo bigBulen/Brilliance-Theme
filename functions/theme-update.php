@@ -2,8 +2,9 @@
 /**
  * 主题更新检测（GitHub Releases，AJAX 非阻塞）
  *
- * 只在后台「Brilliance 主题设置」页触发；查询结果带 transient 缓存，
- * 页面先渲染占位，再由 admin-ajax 异步取回并填充，避免后台卡顿。
+ * 只在后台「Brilliance 主题设置」页触发；查询结果带 transient 缓存。
+ * 容器由前端脚本独占：服务端只输出一个空容器，脚本异步取回数据后
+ * 用 replaceChildren 渲染唯一的提醒，不会残留「正在检查更新…」占位。
  */
 
 if (!defined('ABSPATH')) exit;
@@ -94,30 +95,7 @@ function brilliance_check_github_update($force = false) {
 }
 
 /**
- * 根据状态生成提醒 HTML
- */
-function brilliance_update_notice_html($info) {
-    $current = (is_array($info) && isset($info['current'])) ? $info['current'] : brilliance_theme_version();
-    $refresh = ' <a href="#" class="brilliance-update-recheck" style="margin-left:6px;">重新检查</a>';
-    $state   = (is_array($info) && isset($info['state'])) ? $info['state'] : 'error';
-
-    switch ($state) {
-        case 'update':
-            return '<div class="notice notice-success"><p><strong>发现新版本！</strong> 当前 ' . esc_html($current)
-                . '，最新 ' . esc_html($info['remote_version']) . '。 '
-                . '<a href="' . esc_url($info['url']) . '" target="_blank" rel="noopener">查看更新</a>'
-                . $refresh . '</p></div>';
-        case 'latest':
-            return '<div class="notice notice-info"><p>已是最新版本（' . esc_html($current) . '）。' . $refresh . '</p></div>';
-        case 'none':
-            return '<div class="notice notice-info"><p>已是最新版本（' . esc_html($current) . '；仓库尚无 Release）。' . $refresh . '</p></div>';
-        default:
-            return '<div class="notice notice-warning"><p>无法获取更新信息，请稍后重试。' . $refresh . '</p></div>';
-    }
-}
-
-/**
- * AJAX：返回提醒 HTML
+ * AJAX：返回更新状态数据（JSON）
  */
 function brilliance_ajax_check_update() {
     check_ajax_referer('brilliance_check_update', 'nonce');
@@ -126,52 +104,123 @@ function brilliance_ajax_check_update() {
     }
     $force = !empty($_POST['force']);
     $info  = brilliance_check_github_update($force);
-    wp_send_json_success(array('html' => brilliance_update_notice_html($info)));
+    wp_send_json_success($info);
 }
 add_action('wp_ajax_brilliance_check_update', 'brilliance_ajax_check_update');
 
 /**
- * 在「Brilliance 主题设置」页顶部输出占位 + 异步加载脚本
+ * 在「Brilliance 主题设置」页顶部输出空容器 + 异步加载脚本
  */
 function brilliance_render_update_notice() {
     if (!current_user_can('manage_options')) return;
     $nonce = wp_create_nonce('brilliance_check_update');
     ?>
-    <div id="brilliance-update-notice" data-nonce="<?php echo esc_attr($nonce); ?>" data-ajax="<?php echo esc_url(admin_url('admin-ajax.php')); ?>">
-        <div class="notice notice-info"><p>正在检查更新…</p></div>
-    </div>
+    <div id="brilliance-update-notice"
+         data-nonce="<?php echo esc_attr($nonce); ?>"
+         data-ajax="<?php echo esc_url(admin_url('admin-ajax.php')); ?>"></div>
     <script>
     (function () {
-        var box = document.getElementById('brilliance-update-notice');
-        if (!box) return;
-        var ajax = box.getAttribute('data-ajax') || (typeof ajaxurl !== 'undefined' ? ajaxurl : '');
-        if (!ajax) return;
-        var busy = false;
-        var loadingHtml = '<div class="notice notice-info"><p>正在检查更新…</p></div>';
-        var errorHtml = '<div class="notice notice-warning"><p>无法获取更新信息，请稍后重试。</p></div>';
-        function load(force) {
-            if (busy) return;
-            busy = true;
-            box.innerHTML = loadingHtml;
-            var data = new FormData();
-            data.append('action', 'brilliance_check_update');
-            data.append('nonce', box.getAttribute('data-nonce'));
-            if (force) data.append('force', '1');
-            fetch(ajax, { method: 'POST', credentials: 'same-origin', body: data })
-                .then(function (r) { return r.json(); })
-                .then(function (res) {
-                    busy = false;
-                    box.innerHTML = (res && res.success && res.data && res.data.html) ? res.data.html : errorHtml;
-                })
-                .catch(function () { busy = false; box.innerHTML = errorHtml; });
+        function boot() {
+            var box = document.getElementById('brilliance-update-notice');
+            if (!box) return;
+            var ajax = box.getAttribute('data-ajax') || (typeof ajaxurl !== 'undefined' ? ajaxurl : '');
+            if (!ajax) return;
+            var busy = false;
+
+            // 只渲染一个子节点，确保旧内容（占位/上一次结果）被彻底替换
+            function set(node) {
+                if (box.replaceChildren) {
+                    box.replaceChildren(node);
+                } else {
+                    box.innerHTML = '';
+                    box.appendChild(node);
+                }
+            }
+
+            function makeNotice(kindLower, text) {
+                var d = document.createElement('div');
+                d.className = 'notice notice-' + kindLower;
+                var p = document.createElement('p');
+                p.appendChild(document.createTextNode(text));
+                d.appendChild(p);
+                return d;
+            }
+
+            function addRefresh(p) {
+                p.appendChild(document.createTextNode(' '));
+                var a = document.createElement('a');
+                a.href = '#';
+                a.className = 'brilliance-update-recheck';
+                a.textContent = '重新检查';
+                p.appendChild(a);
+            }
+
+            function build(info) {
+                info = info || {};
+                var state = info.state || 'error';
+                var current = info.current || '';
+                var d = document.createElement('div');
+                d.className = 'notice notice-' + (state === 'update' ? 'success' : (state === 'error' ? 'warning' : 'info'));
+                var p = document.createElement('p');
+
+                if (state === 'update') {
+                    var strong = document.createElement('strong');
+                    strong.textContent = '发现新版本！';
+                    p.appendChild(strong);
+                    p.appendChild(document.createTextNode(' 当前 ' + current + '，最新 ' + (info.remote_version || '') + '。 '));
+                    var a = document.createElement('a');
+                    a.href = info.url || '#';
+                    a.target = '_blank';
+                    a.rel = 'noopener';
+                    a.textContent = '查看更新';
+                    p.appendChild(a);
+                } else if (state === 'latest') {
+                    p.appendChild(document.createTextNode('已是最新版本（' + current + '）。'));
+                } else if (state === 'none') {
+                    p.appendChild(document.createTextNode('已是最新版本（' + current + '；仓库尚无 Release）。'));
+                } else {
+                    p.appendChild(document.createTextNode('无法获取更新信息，请稍后重试。'));
+                }
+                addRefresh(p);
+                d.appendChild(p);
+                return d;
+            }
+
+            function load(force) {
+                if (busy) return;
+                busy = true;
+                set(makeNotice('info', '正在检查更新…'));
+                var data = new FormData();
+                data.append('action', 'brilliance_check_update');
+                data.append('nonce', box.getAttribute('data-nonce'));
+                if (force) data.append('force', '1');
+                fetch(ajax, { method: 'POST', credentials: 'same-origin', body: data })
+                    .then(function (r) { return r.json(); })
+                    .then(function (res) {
+                        busy = false;
+                        set(build(res && res.success ? res.data : { state: 'error' }));
+                    })
+                    .catch(function () {
+                        busy = false;
+                        set(build({ state: 'error' }));
+                    });
+            }
+
+            box.addEventListener('click', function (e) {
+                var a = e.target && e.target.closest ? e.target.closest('.brilliance-update-recheck') : null;
+                if (!a) return;
+                e.preventDefault();
+                load(true);
+            });
+
+            load(false);
         }
-        box.addEventListener('click', function (e) {
-            var a = e.target && e.target.closest ? e.target.closest('.brilliance-update-recheck') : null;
-            if (!a) return;
-            e.preventDefault();
-            load(true);
-        });
-        load(false);
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', boot);
+        } else {
+            boot();
+        }
     })();
     </script>
     <?php
