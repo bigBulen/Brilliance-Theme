@@ -868,7 +868,7 @@ class Brilliance_Map {
         $config = array(
             'restUrl'       => esc_url_raw(rest_url('brilliance-map/v1')),
             'tileUrl'       => $settings['tile_url'] !== '' ? $settings['tile_url'] : apply_filters('bm_tile_url', 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'),
-            'geoJsonUrl'    => apply_filters('bm_geojson_url', 'https://cdn.jsdelivr.net/gh/johan/world.geo.json@master/countries.geo.json'),
+            'geoJsonUrl'    => apply_filters('bm_geojson_url', MIMOSA_THEME_URI . '/assets/vendor/geojson/countries.geo.json'),
             'center'        => apply_filters('bm_map_center', $view['center']),
             'zoom'          => (int) apply_filters('bm_map_zoom', $view['zoom']),
             'focusId'       => isset($_GET['location_id']) ? absint(wp_unslash($_GET['location_id'])) : 0,
@@ -934,17 +934,19 @@ class Brilliance_Map {
         // 仅在开启「标点聚合」时才加载 markercluster，默认省掉两个请求
         $cluster = !empty(self::get_setting('enable_cluster', 0));
 
-        wp_enqueue_style('bm-leaflet', 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css', array(), '1.9.4');
+        // Leaflet / MarkerCluster 已本地化到 assets/vendor/，不再依赖 jsDelivr
+        $vendor = MIMOSA_THEME_URI . '/assets/vendor';
+        wp_enqueue_style('bm-leaflet', $vendor . '/leaflet/leaflet.css', array(), mimosa_asset_version('assets/vendor/leaflet/leaflet.css'));
         if ($cluster) {
-            wp_enqueue_style('bm-cluster', 'https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.css', array('bm-leaflet'), '1.5.3');
-            wp_enqueue_style('bm-cluster-default', 'https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css', array('bm-cluster'), '1.5.3');
+            wp_enqueue_style('bm-cluster', $vendor . '/leaflet-markercluster/MarkerCluster.css', array('bm-leaflet'), mimosa_asset_version('assets/vendor/leaflet-markercluster/MarkerCluster.css'));
+            wp_enqueue_style('bm-cluster-default', $vendor . '/leaflet-markercluster/MarkerCluster.Default.css', array('bm-cluster'), mimosa_asset_version('assets/vendor/leaflet-markercluster/MarkerCluster.Default.css'));
         }
         wp_enqueue_style('bm-map', MIMOSA_THEME_URI . '/assets/css/bm-map.css', array('bm-leaflet'), mimosa_asset_version('assets/css/bm-map.css'));
 
-        wp_enqueue_script('bm-leaflet', 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js', array(), '1.9.4', true);
+        wp_enqueue_script('bm-leaflet', $vendor . '/leaflet/leaflet.js', array(), mimosa_asset_version('assets/vendor/leaflet/leaflet.js'), true);
         $deps = array('bm-leaflet');
         if ($cluster) {
-            wp_enqueue_script('bm-cluster', 'https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js', array('bm-leaflet'), '1.5.3', true);
+            wp_enqueue_script('bm-cluster', $vendor . '/leaflet-markercluster/leaflet.markercluster.js', array('bm-leaflet'), mimosa_asset_version('assets/vendor/leaflet-markercluster/leaflet.markercluster.js'), true);
             $deps[] = 'bm-cluster';
         }
         wp_enqueue_script('bm-map', MIMOSA_THEME_URI . '/assets/js/bm-map.js', $deps, mimosa_asset_version('assets/js/bm-map.js'), true);

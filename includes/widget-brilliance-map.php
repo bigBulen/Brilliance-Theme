@@ -20,11 +20,13 @@ if (!defined('ABSPATH')) exit;
  * 小地图前端资源（Leaflet + 复用大地图标点样式 + 小地图容器样式）。重复调用只入队一次。
  */
 function brilliance_enqueue_mini_map_assets() {
-    wp_enqueue_style('bm-leaflet', 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css', array(), '1.9.4');
+    // Leaflet 已本地化到 assets/vendor/，不再依赖 jsDelivr
+    $vendor = MIMOSA_THEME_URI . '/assets/vendor';
+    wp_enqueue_style('bm-leaflet', $vendor . '/leaflet/leaflet.css', array(), mimosa_asset_version('assets/vendor/leaflet/leaflet.css'));
     wp_enqueue_style('bm-map', MIMOSA_THEME_URI . '/assets/css/bm-map.css', array('bm-leaflet'), mimosa_asset_version('assets/css/bm-map.css'));
     wp_enqueue_style('bm-mini-map', MIMOSA_THEME_URI . '/assets/css/bm-mini-map.css', array('bm-map'), mimosa_asset_version('assets/css/bm-mini-map.css'));
 
-    wp_enqueue_script('bm-leaflet', 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js', array(), '1.9.4', true);
+    wp_enqueue_script('bm-leaflet', $vendor . '/leaflet/leaflet.js', array(), mimosa_asset_version('assets/vendor/leaflet/leaflet.js'), true);
     wp_enqueue_script('bm-mini-map', MIMOSA_THEME_URI . '/assets/js/bm-mini-map.js', array('bm-leaflet'), mimosa_asset_version('assets/js/bm-mini-map.js'), true);
 }
 
@@ -110,7 +112,7 @@ function brilliance_render_mini_map($args = array()) {
         'center'       => apply_filters('bm_map_center', $view['center']),
         'zoom'         => (int) apply_filters('bm_map_zoom', $view['zoom']),
         'tileUrl'      => $settings['tile_url'] !== '' ? $settings['tile_url'] : apply_filters('bm_tile_url', 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'),
-        'geoJsonUrl'   => apply_filters('bm_geojson_url', 'https://cdn.jsdelivr.net/gh/johan/world.geo.json@master/countries.geo.json'),
+        'geoJsonUrl'   => apply_filters('bm_geojson_url', MIMOSA_THEME_URI . '/assets/vendor/geojson/countries.geo.json'),
         'showMarkers'  => (bool) $settings['show_markers'],
         'showOutlines' => (bool) $settings['show_outlines'],
         'showBadge'    => (bool) $settings['show_post_badge'],

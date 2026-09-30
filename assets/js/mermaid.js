@@ -2,10 +2,18 @@
  * Brilliance Mermaid 渲染
  *
  * 识别 `code.language-mermaid`（Gutenberg 代码块语言选 mermaid / Markdown ```mermaid 围栏），
- * 懒加载 mermaid（jsDelivr），前端渲染为 SVG。支持暗/亮模式配色自动切换。
+ * 懒加载本地 mermaid（assets/vendor/mermaid/，由 brillianceMermaid.src 传入），前端渲染为 SVG。
+ * 支持暗/亮模式配色自动切换。
  */
 (function () {
     'use strict';
+
+    // 本地 mermaid 路径：优先用 wp_localize_script 传入的地址；
+    // 否则从本脚本自身 URL 推导 assets/vendor/mermaid/mermaid.min.js（不依赖任何 CDN）。
+    var vendorSrc = (window.brillianceMermaid && window.brillianceMermaid.src) || '';
+    if (!vendorSrc && document.currentScript && document.currentScript.src) {
+        vendorSrc = document.currentScript.src.replace(/assets\/js\/mermaid\.js(\?.*)?$/, 'assets/vendor/mermaid/mermaid.min.js');
+    }
 
     var loaded = false;
     var loading = false;
@@ -21,10 +29,10 @@
 
     function loadMermaid(cb) {
         if (window.mermaid) { cb(); return; }
-        if (loading) return;
+        if (loading || !vendorSrc) return;
         loading = true;
         var s = document.createElement('script');
-        s.src = 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js';
+        s.src = vendorSrc;
         s.onload = function () { loading = false; if (window.mermaid) cb(); };
         s.onerror = function () { loading = false; };
         document.head.appendChild(s);

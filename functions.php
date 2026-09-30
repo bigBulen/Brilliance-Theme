@@ -544,21 +544,27 @@ function mimosa_scripts() {
             mimosa_asset_version('assets/js/mermaid.js'),
             true
         );
+        // 库文件已本地化，通过 script 变量告知前端加载地址（不再依赖 jsDelivr）
+        wp_localize_script('brilliance-mermaid', 'brillianceMermaid', array(
+            'src' => MIMOSA_THEME_URI . '/assets/vendor/mermaid/mermaid.min.js',
+        ));
     }
 
     // Prism 在所有前台页面可用，兼容首页摘要、短代码和动态内容中的代码块。
+    // 资源已本地化到 assets/vendor/prism/（含 components/ 语言包），不再依赖 jsDelivr。
     if (!is_admin()) {
+        $prism_uri = MIMOSA_THEME_URI . '/assets/vendor/prism';
         wp_enqueue_style(
             'brilliance-prism',
-                        'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css',
+            $prism_uri . '/themes/prism-tomorrow.min.css',
             array(),
-            '1.29.0'
+            mimosa_asset_version('assets/vendor/prism/themes/prism-tomorrow.min.css')
         );
         wp_enqueue_style(
             'brilliance-prism-line-numbers',
-            'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.css',
+            $prism_uri . '/plugins/line-numbers/prism-line-numbers.min.css',
             array('brilliance-prism'),
-            '1.29.0'
+            mimosa_asset_version('assets/vendor/prism/plugins/line-numbers/prism-line-numbers.min.css')
         );
         wp_enqueue_style(
             'brilliance-prism-custom',
@@ -569,42 +575,42 @@ function mimosa_scripts() {
         
         wp_enqueue_script(
             'brilliance-prism',
-                        'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js',
+            $prism_uri . '/prism.js',
             array(),
-            '1.29.0',
+            mimosa_asset_version('assets/vendor/prism/prism.js'),
             true
         );
         wp_enqueue_script(
             'brilliance-prism-autoloader',
-            'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js',
+            $prism_uri . '/plugins/autoloader/prism-autoloader.min.js',
             array('brilliance-prism'),
-            '1.29.0',
+            mimosa_asset_version('assets/vendor/prism/plugins/autoloader/prism-autoloader.min.js'),
             true
         );
         wp_enqueue_script(
             'brilliance-prism-line-numbers',
-            'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js',
+            $prism_uri . '/plugins/line-numbers/prism-line-numbers.min.js',
             array('brilliance-prism-autoloader'),
-            '1.29.0',
+            mimosa_asset_version('assets/vendor/prism/plugins/line-numbers/prism-line-numbers.min.js'),
             true
         );
         wp_enqueue_script(
             'brilliance-prism-toolbar',
-            'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/toolbar/prism-toolbar.min.js',
+            $prism_uri . '/plugins/toolbar/prism-toolbar.min.js',
             array('brilliance-prism-line-numbers'),
-            '1.29.0',
+            mimosa_asset_version('assets/vendor/prism/plugins/toolbar/prism-toolbar.min.js'),
             true
         );
         wp_enqueue_script(
             'brilliance-prism-copy',
-            'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js',
+            $prism_uri . '/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js',
             array('brilliance-prism-toolbar'),
-            '1.29.0',
+            mimosa_asset_version('assets/vendor/prism/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js'),
             true
         );
         wp_add_inline_script(
             'brilliance-prism-copy',
-            "(function () { function initPrism() { if (!window.Prism) return; if (Prism.plugins && Prism.plugins.autoloader) { Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/'; } Prism.highlightAllUnder(document); window.mimosaHighlightCode = function (root) { Prism.highlightAllUnder(root || document); }; } if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initPrism, { once: true }); } else { initPrism(); } }());"
+            "(function () { function initPrism() { if (!window.Prism) return; if (Prism.plugins && Prism.plugins.autoloader) { Prism.plugins.autoloader.languages_path = '" . esc_js($prism_uri . '/components/') . "'; } Prism.highlightAllUnder(document); window.mimosaHighlightCode = function (root) { Prism.highlightAllUnder(root || document); }; } if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initPrism, { once: true }); } else { initPrism(); } }());"
         );
     }
 
@@ -900,7 +906,13 @@ add_action('customize_register', 'mimosa_customize_register');
 
 
 function add_font_awesome() {
-    wp_enqueue_style( 'font-awesome', '//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' );
+    // 本地化 Font Awesome 4.7.0（含 fonts/），不再依赖 cdnjs。
+    wp_enqueue_style(
+        'font-awesome',
+        MIMOSA_THEME_URI . '/assets/vendor/font-awesome/css/font-awesome.min.css',
+        array(),
+        mimosa_asset_version('assets/vendor/font-awesome/css/font-awesome.min.css')
+    );
 }
 add_action( 'wp_enqueue_scripts', 'add_font_awesome' );
 
