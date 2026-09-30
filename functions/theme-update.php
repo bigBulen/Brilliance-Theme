@@ -126,15 +126,15 @@ function brilliance_render_update_notice() {
             var ajax = box.getAttribute('data-ajax') || (typeof ajaxurl !== 'undefined' ? ajaxurl : '');
             if (!ajax) return;
             var busy = false;
+            var settled = false;
+            var timer = null;
 
-            // 只渲染一个子节点，确保旧内容（占位/上一次结果）被彻底替换
+            // 显式清空容器后再插入唯一节点，确保旧内容（占位/上一次结果）被彻底替换
             function set(node) {
-                if (box.replaceChildren) {
-                    box.replaceChildren(node);
-                } else {
-                    box.innerHTML = '';
-                    box.appendChild(node);
+                while (box.firstChild) {
+                    box.removeChild(box.firstChild);
                 }
+                box.appendChild(node);
             }
 
             function makeNotice(kindLower, text) {
@@ -186,24 +186,49 @@ function brilliance_render_update_notice() {
                 return d;
             }
 
+            // 兜底：清掉页面上任何残留的「正在检查更新…」占位（含重复/历史节点）
+            function removeStrayLoading() {
+                var nodes = document.querySelectorAll('.notice');
+                for (var i = 0; i < nodes.length; i++) {
+                    var n = nodes[i];
+                    var t = (n.textContent || '').replace(/\s+/g, '');
+                    if (t.indexOf('正在检查更新') === 0 && n.parentNode) {
+                        n.parentNode.removeChild(n);
+                    }
+                }
+            }
+
+            // 唯一收尾点：成功 / 失败 / 超时都只渲染一次结果
+            function finish(info) {
+                if (settled) return;
+                settled = true;
+                busy = false;
+                if (timer) { clearTimeout(timer); timer = null; }
+                var node;
+                try {
+                    node = build(info);
+                } catch (e) {
+                    node = makeNotice('warning', '无法获取更新信息，请稍后重试。');
+                }
+                set(node);
+                removeStrayLoading();
+            }
+
             function load(force) {
                 if (busy) return;
                 busy = true;
+                settled = false;
                 set(makeNotice('info', '正在检查更新…'));
+                if (timer) { clearTimeout(timer); }
+                timer = setTimeout(function () { finish({ state: 'error' }); }, 12000);
                 var data = new FormData();
                 data.append('action', 'brilliance_check_update');
                 data.append('nonce', box.getAttribute('data-nonce'));
                 if (force) data.append('force', '1');
                 fetch(ajax, { method: 'POST', credentials: 'same-origin', body: data })
                     .then(function (r) { return r.json(); })
-                    .then(function (res) {
-                        busy = false;
-                        set(build(res && res.success ? res.data : { state: 'error' }));
-                    })
-                    .catch(function () {
-                        busy = false;
-                        set(build({ state: 'error' }));
-                    });
+                    .then(function (res) { finish(res && res.success ? res.data : { state: 'error' }); })
+                    .catch(function () { finish({ state: 'error' }); });
             }
 
             box.addEventListener('click', function (e) {
