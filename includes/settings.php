@@ -75,6 +75,7 @@ function mimosa_settings_page() {
     ?>
     <div class="wrap">
         <h1>Brilliance 主题设置</h1>
+        <?php if (function_exists('brilliance_render_update_notice')) brilliance_render_update_notice(); ?>
         <?php if ($saved): ?>
         <div class="notice notice-success is-dismissible"><p>设置已保存。</p></div>
         <?php endif; ?>

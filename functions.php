@@ -25,6 +25,7 @@ require_once MIMOSA_THEME_DIR . '/includes/impressions.php';
 require_once MIMOSA_THEME_DIR . '/includes/brilliance-map.php';
 if (is_admin()) {
     require_once MIMOSA_THEME_DIR . '/includes/brilliance-map-admin.php';
+    require_once MIMOSA_THEME_DIR . '/functions/theme-update.php'; // 后台主题更新检测（GitHub Releases）
 }
 require_once MIMOSA_THEME_DIR . '/functions/feed.php';
 require_once MIMOSA_THEME_DIR . '/functions/comments.php';
