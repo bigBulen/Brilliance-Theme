@@ -36,6 +36,7 @@ function mimosa_register_settings() {
         'mimosa_acgn_cover_sideload_enable',
         'mimosa_impressions_slug', 'mimosa_impressions_center_text',
         'argon_mimosa_custom_post_types', 'argon_mimosa_book_map',
+        'brilliance_wordcount_enable',
         // 评论设置
         'mimosa_comment_order', 'mimosa_comment_per_page',
         'mimosa_comment_fold_threshold', 'mimosa_comment_reply_depth',
@@ -636,6 +637,16 @@ function mimosa_settings_page() {
             <h3>字数统计（页脚）</h3>
             <table class="form-table">
                 <tr>
+                    <th><label for="brilliance_wordcount_enable">页脚字数统计</label></th>
+                    <td>
+                        <select id="brilliance_wordcount_enable" name="brilliance_wordcount_enable">
+                            <option value="yes" <?php selected(get_option('brilliance_wordcount_enable', 'yes'), 'yes'); ?>>启用</option>
+                            <option value="no"  <?php selected(get_option('brilliance_wordcount_enable', 'yes'), 'no'); ?>>关闭</option>
+                        </select>
+                        <p class="description">关闭后页脚不再显示字数统计（也不再执行统计计算）。</p>
+                    </td>
+                </tr>
+                <tr>
                     <th><label for="argon_mimosa_custom_post_types">统计的文章类型</label></th>
                     <td>
                         <input type="text" id="argon_mimosa_custom_post_types" name="argon_mimosa_custom_post_types"
@@ -650,6 +661,15 @@ function mimosa_settings_page() {
                         <textarea id="argon_mimosa_book_map" name="argon_mimosa_book_map" rows="5" class="large-text code"><?php echo esc_textarea(get_option('argon_mimosa_book_map', '')); ?></textarea>
                         <p class="description">例：<code>{"130000":"《老人与海》","200000":"《人类群星闪耀时》"}</code></p>
                         <p class="description">注意：字数统计结果有 12 小时 transient 缓存（<code>mimosa_site_word_count_filtered</code>）；书籍映射表为实时读取，改动立即生效。留空则在页脚提示前往此处添加映射表。</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>刷新缓存</th>
+                    <td>
+                        <button type="button" class="button" id="brilliance-wordcount-refresh"
+                                data-nonce="<?php echo esc_attr(wp_create_nonce('brilliance_clear_wordcount_cache')); ?>">刷新字数统计缓存</button>
+                        <span id="brilliance-wordcount-refresh-msg" style="margin-left:8px;color:#646970;"></span>
+                        <p class="description">改动文章/说说内容后，可点此立即重算，无需等 12 小时缓存过期。修改「统计的文章类型」并保存时也会自动清空缓存。</p>
                     </td>
                 </tr>
             </table>
@@ -773,6 +793,38 @@ function mimosa_settings_page() {
             }
             window.addEventListener('scroll', onScroll, { passive: true });
             onScroll();
+        })();
+        </script>
+
+        <script>
+        (function () {
+            var btn = document.getElementById('brilliance-wordcount-refresh');
+            var msg = document.getElementById('brilliance-wordcount-refresh-msg');
+            if (!btn || !msg || typeof ajaxurl === 'undefined') return;
+            btn.addEventListener('click', function () {
+                btn.disabled = true;
+                msg.style.color = '#646970';
+                msg.textContent = '刷新中…';
+                var data = new FormData();
+                data.append('action', 'brilliance_clear_wordcount_cache');
+                data.append('nonce', btn.getAttribute('data-nonce'));
+                fetch(ajaxurl, { method: 'POST', credentials: 'same-origin', body: data })
+                    .then(function (r) { return r.json(); })
+                    .then(function (res) {
+                        if (res && res.success) {
+                            msg.textContent = res.data || '缓存已刷新';
+                            msg.style.color = '#008a20';
+                        } else {
+                            msg.textContent = (res && res.data) ? res.data : '刷新失败';
+                            msg.style.color = '#d63638';
+                        }
+                    })
+                    .catch(function () {
+                        msg.textContent = '刷新失败';
+                        msg.style.color = '#d63638';
+                    })
+                    .then(function () { btn.disabled = false; });
+            });
         })();
         </script>
     </div>

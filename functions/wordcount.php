@@ -28,6 +28,11 @@ function mimosa_count_filtered_words($content) {
  * 全站字数统计（文章 + 说说 + ACGN 评测）
  */
 function mimosa_get_site_word_count() {
+    // 功能开关：关闭时直接返回空，页脚不显示
+    if (get_option('brilliance_wordcount_enable', 'yes') !== 'yes') {
+        return '';
+    }
+
     global $wpdb;
 
     // 只缓存耗时的「字数统计」结果（int）。
@@ -106,3 +111,26 @@ function mimosa_get_site_word_count() {
             . '的篇幅了！'
             . $book_map_hint;
 }
+
+/**
+ * 清空字数统计缓存（后台设置页「刷新缓存」按钮，AJAX）
+ */
+function mimosa_clear_wordcount_cache() {
+    check_ajax_referer('brilliance_clear_wordcount_cache', 'nonce');
+    if (!current_user_can('manage_options')) {
+        wp_send_json_error('无权限');
+    }
+    delete_transient('mimosa_site_word_count_filtered');
+    wp_send_json_success('字数统计缓存已刷新');
+}
+add_action('wp_ajax_brilliance_clear_wordcount_cache', 'mimosa_clear_wordcount_cache');
+
+/**
+ * 「统计的文章类型」变更时自动清空缓存，避免旧结果在 12 小时内残留
+ */
+function mimosa_wordcount_maybe_clear_cache($old_value, $new_value) {
+    if ($old_value !== $new_value) {
+        delete_transient('mimosa_site_word_count_filtered');
+    }
+}
+add_action('update_option_argon_mimosa_custom_post_types', 'mimosa_wordcount_maybe_clear_cache', 10, 2);
