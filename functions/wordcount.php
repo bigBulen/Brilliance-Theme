@@ -102,7 +102,7 @@ function mimosa_get_site_word_count() {
     }
 
     // 未配置书籍映射字典时，提示去主题设置添加
-    $book_map_hint = empty($book_map) ? '（映射表为空，请到主题设置-「字数统计（页脚）」中添加书籍字数映射表）' : '';
+    $book_map_hint = empty($book_map) ? '（映射表为空，请到 主题设置-「字数统计（页脚）」中添加书籍字数映射表，或关闭此功能）' : '';
 
     return '本站已发布的文章字数为 '
             . number_format($total_words) 
