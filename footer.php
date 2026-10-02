@@ -10,10 +10,9 @@
         ?>
         <div class="site-footer__custom">
             <?php
-            $footer_allowed = wp_kses_allowed_html('post');
-            $footer_allowed['style'] = array('type' => true, 'media' => true);
-            $footer_allowed['script'] = array('type' => true, 'src' => true, 'defer' => true, 'async' => true, 'crossorigin' => true);
-            echo wp_kses($custom_html, $footer_allowed);
+            // 该字段仅管理员可编辑（设置页 require manage_options），保存时已按权限过滤，
+            // 这里原样输出，允许内联 <script> / <style> / 自定义元素（如 <meting-js>）等正常执行。
+            echo $custom_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             ?>
         </div>
         <?php endif; ?>
@@ -39,11 +38,6 @@
 
 
 
-<!-- 小播放器信息 -->
-<script>var meting_api='https://loneapex.cn/meting-api/?server=:server&type=:type&id=:id&auth=:auth&r=:r';</script>
-<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/Aplayer/APlayer.min.css">
-<script src="<?php echo get_template_directory_uri(); ?>/assets/Aplayer/APlayer.min.js"></script>
-<script src="<?php echo get_template_directory_uri(); ?>/assets/Aplayer/Meting.min.js"></script>
 
 
 <script>

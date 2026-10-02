@@ -18,6 +18,18 @@ function mimosa_admin_menu() {
 }
 add_action('admin_menu', 'mimosa_admin_menu');
 
+/**
+ * 页脚自定义 HTML 的保存过滤：
+ * 有 unfiltered_html 权限（单站点管理员 / 多站点超管）时原样保存，允许 <script>/<style>；
+ * 否则退回 wp_kses_post，避免低权限用户注入脚本。
+ */
+function mimosa_sanitize_footer_html($value) {
+    if (current_user_can('unfiltered_html')) {
+        return $value;
+    }
+    return wp_kses_post($value);
+}
+
 function mimosa_register_settings() {
     $options = array(
         'mimosa_site_title', 'mimosa_banner_subtitle', 'mimosa_intro',
@@ -64,6 +76,13 @@ function mimosa_register_settings() {
         'mimosa_captcha_enable', 'mimosa_gravatar_cdn', 'mimosa_stamp_invert',
     );
     foreach ($options as $opt) {
+        if ($opt === 'mimosa_footer_custom_html') {
+            // 允许管理员保存脚本/样式：原样保存（前端原样输出）
+            register_setting('mimosa_settings_group', $opt, array(
+                'sanitize_callback' => 'mimosa_sanitize_footer_html',
+            ));
+            continue;
+        }
         register_setting('mimosa_settings_group', $opt);
     }
 }
@@ -732,7 +751,7 @@ function mimosa_settings_page() {
                     <th><label for="mimosa_footer_custom_html">自定义页脚内容</label></th>
                     <td>
                         <textarea id="mimosa_footer_custom_html" name="mimosa_footer_custom_html" rows="12" class="large-text code"><?php echo esc_textarea(get_option('mimosa_footer_custom_html', '')); ?></textarea>
-                        <p class="description">自由填写页脚附加 HTML 内容。支持常用标签及 &lt;style&gt;、&lt;script&gt;。留空则不显示。</p>
+                        <p class="description">自由填写页脚附加 HTML / 脚本，内容会<strong>原样输出</strong>（<code>&lt;script&gt;</code>、<code>&lt;style&gt;</code>、自定义元素等均会执行/渲染）。仅管理员可编辑，留空则不显示。</p>
                     </td>
                 </tr>
             </table>
