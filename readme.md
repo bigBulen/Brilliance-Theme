@@ -3,11 +3,13 @@
 > **轻量而不简陋，克制而不失美感。**
 > 一个更适合 ACGN 爱好者的 WordPress 博客主题。
 
-![Brilliance Theme](https://s1.loneapex.cn/loneapex.cn-others/brilliance_docs/assets/screenshot.png)
+![Brilliance Theme](./screenshot.png)
 
 Brilliance 是一个基于 WordPress 的个人博客主题。
 
 它并不试图成为一个「什么都能做」的万能主题，而是希望在保持博客本身简洁、易用的基础上，为喜欢 **ACGN、个人记录、旅行与长期写作** 的用户提供一些更有趣的内容组织方式。
+
+本主题大部分代码由AI辅助编写。
 
 ---
 
@@ -35,7 +37,7 @@ Brilliance 是一个基于 WordPress 的个人博客主题。
     * 以更加自由、沉浸的方式浏览自己的 ACGN 记忆
     * 不只是一个数据库，也是属于自己的作品记忆档案
 
-![ACGN 系统](https://s1.loneapex.cn/loneapex.cn-others/brilliance_docs/assets/index/pre3.jpg)
+![ACGN 系统](assets/preview/pre3.jpg)
 
 ---
 
@@ -51,7 +53,7 @@ Brilliance 是一个基于 WordPress 的个人博客主题。
 
 对于旅行、圣地巡礼以及长期个人记录来说，这个地图不只是一个导航工具，而是另一种整理记忆的方式。
 
-![足迹地图](https://s1.loneapex.cn/loneapex.cn-others/brilliance_docs/assets/index/pre6.jpg)
+![足迹地图](assets/preview/pre6.jpg)
 
 ---
 
@@ -149,49 +151,49 @@ Brilliance 并不是一个只能展示 ACGN 数据的「特殊主题」。
 
 ### 首页
 
-![Banner 预览](https://s1.loneapex.cn/loneapex.cn-others/brilliance_docs/assets/index/pre1.jpg)
+![Banner 预览](assets/preview/pre1.jpg)
 
 *Banner 与首页视觉效果*
 
 ### 首页文章流
 
-![主页文章流混排](https://s1.loneapex.cn/loneapex.cn-others/brilliance_docs/assets/index/pre2.jpg)
+![主页文章流混排](assets/preview/pre2.jpg)
 
 *文章、说说与 ACGN 预览卡片混排*
 
 ### 文章页面
 
-![文章页面](https://s1.loneapex.cn/loneapex.cn-others/brilliance_docs/assets/index/pre0.jpg)
+![文章页面](assets/preview/pre0.jpg)
 
 *文章阅读页面*
 
 ### ACGN 列表
 
-![ACGN 列表](https://s1.loneapex.cn/loneapex.cn-others/brilliance_docs/assets/index/pre3.jpg)
+![ACGN 列表](assets/preview/pre3.jpg)
 
 *ACGN 作品管理与展示*
 
 ### ACGN 详情页
 
-![ACGN 条目详情页](https://s1.loneapex.cn/loneapex.cn-others/brilliance_docs/assets/index/pre4.jpg)
+![ACGN 条目详情页](assets/preview/pre4.jpg)
 
 *独立作品详情页面*
 
 ### 印象集
 
-![ACGN 印象集](https://s1.loneapex.cn/loneapex.cn-others/brilliance_docs/assets/index/pre5.jpg)
+![ACGN 印象集](assets/preview/pre5.jpg)
 
 *「记忆星空」印象集*
 
 ### 足迹地图
 
-![足迹地图](https://s1.loneapex.cn/loneapex.cn-others/brilliance_docs/assets/index/pre6.jpg)
+![足迹地图](assets/preview/pre6.jpg)
 
 *文章与地点组成的记忆地图*
 
 ### 日程时间轴
 
-![日程时间轴](https://s1.loneapex.cn/loneapex.cn-others/brilliance_docs/assets/index/pre7.jpg)
+![日程时间轴](assets/preview/pre7.jpg)
 
 *个人日程时间轴*
 

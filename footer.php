@@ -26,7 +26,7 @@
         <p class="site-footer__words"><?php echo esc_html($word_count); ?></p>
         <?php endif; ?>
 
-        <div>Theme <a href="https://github.com/bigBulen/Brilliance-Theme" target="_blank">Brilliance</a> By Mimosa233</div>
+        <div>Theme <a href="https://github.com/bigBulen/Brilliance-Theme" target="_blank">Brilliance</a> By <a href="https://loneapex.cn/" target="_blank">Mimosa233</a></div>
 
     </div>
 
