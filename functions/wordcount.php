@@ -33,11 +33,18 @@ function mimosa_get_site_word_count() {
         return '';
     }
 
+    // 书籍映射：为空则不显示字数统计（并跳过耗时的统计计算）
+    $book_json = get_option('argon_mimosa_book_map', '{}');
+    $book_map = json_decode($book_json, true);
+    if (!is_array($book_map)) $book_map = [];
+    if (empty($book_map)) {
+        return '';
+    }
+
     global $wpdb;
 
-    // 只缓存耗时的「字数统计」结果（int）。
-    // 书籍映射与「映射表为空」提示每次实时计算，这样后台改映射表立即生效，
-    // 不会被 12 小时缓存挡住（旧版缓存的是整段文案，导致清空映射表后提示仍不出现）。
+    // 只缓存耗时的「字数统计」结果（int）；书籍映射每次实时读取，
+    // 这样后台改映射表立即生效，不会被 12 小时缓存挡住。
     $cache_key = 'mimosa_site_word_count_filtered';
     $total_words = get_transient($cache_key);
 
@@ -85,11 +92,7 @@ function mimosa_get_site_word_count() {
         $total_words = (int) $total_words;
     }
 
-    // 3. 书籍映射（实时读取，改动立即生效）
-    $book_json = get_option('argon_mimosa_book_map', '{}');
-    $book_map = json_decode($book_json, true);
-    if (!is_array($book_map)) $book_map = [];
-
+    // 取最接近的书籍（书籍映射已在上方读取）
     $closest_diff = PHP_INT_MAX;
     $closest_book = '一本中篇小说';
 
@@ -101,15 +104,11 @@ function mimosa_get_site_word_count() {
         }
     }
 
-    // 未配置书籍映射字典时，提示去主题设置添加
-    $book_map_hint = empty($book_map) ? '（映射表为空，请到 主题设置-「字数统计（页脚）」中添加书籍字数映射表，或关闭此功能）' : '';
-
     return '本站已发布的文章字数为 '
             . number_format($total_words) 
             . ' 字，已经接近'
             . esc_html($closest_book) 
-            . '的篇幅了！'
-            . $book_map_hint;
+            . '的篇幅了！';
 }
 
 /**

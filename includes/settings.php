@@ -681,7 +681,7 @@ function mimosa_settings_page() {
                     <td>
                         <textarea id="argon_mimosa_book_map" name="argon_mimosa_book_map" rows="5" class="large-text code"><?php echo esc_textarea(get_option('argon_mimosa_book_map', '')); ?></textarea>
                         <p class="description">例：<code>{"130000":"《老人与海》","200000":"《人类群星闪耀时》"}</code></p>
-                        <p class="description">注意：字数统计结果有 12 小时 transient 缓存（<code>mimosa_site_word_count_filtered</code>）；书籍映射表为实时读取，改动立即生效。留空则在页脚提示前往此处添加映射表。</p>
+                        <p class="description">注意：字数统计结果有 12 小时 transient 缓存（<code>mimosa_site_word_count_filtered</code>）；书籍映射表为实时读取，改动立即生效。<strong>留空则页脚不显示字数统计。</strong></p>
                     </td>
                 </tr>
                 <tr>
