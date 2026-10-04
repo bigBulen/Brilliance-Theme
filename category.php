@@ -36,7 +36,7 @@ $cat_count = $category->count;
             if (have_posts()) {
                 while (have_posts()) {
                     the_post();
-                    get_template_part('template-parts/content', 'post-preview');
+                    get_template_part('template-parts/content', 'preview');
                 }
             } else {
                 echo '<div class="archive-empty">此分类下暂无文章</div>';

@@ -36,7 +36,7 @@ $tag_description = $tag->description ?: '';
             if (have_posts()) {
                 while (have_posts()) {
                     the_post();
-                    get_template_part('template-parts/content', 'post-preview');
+                    get_template_part('template-parts/content', 'preview');
                 }
             } else {
                 echo '<div class="archive-empty">此标签下暂无文章</div>';
