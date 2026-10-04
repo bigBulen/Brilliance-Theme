@@ -3,7 +3,6 @@
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script defer src="https://umami.loneapex.cn/script.js" data-website-id="82373bbe-f072-4a81-a32e-81d0687b2ebe"></script>
     <?php 
     // SEO Meta 标签
     if (function_exists('brilliance_output_seo_meta')) {

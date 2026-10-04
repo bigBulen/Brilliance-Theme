@@ -187,6 +187,7 @@ function mimosa_settings_page() {
                     <th><label for="mimosa_avatar_url">头像 URL</label></th>
                     <td><input type="url" id="mimosa_avatar_url" name="mimosa_avatar_url" class="regular-text"
                                value="<?php echo esc_attr(get_option('mimosa_avatar_url', '')); ?>"></td>
+                    <p class="description">展示在banner区域的头像</p>
                 </tr>
                 <tr>
                     <th><label for="mimosa_intro">个人简介</label></th>
