@@ -11,6 +11,9 @@ Brilliance 是一个基于 WordPress 的个人博客主题。
 
 本主题大部分代码由AI辅助编写。
 
+
+**在使用前建议阅读[使用文档](https://docs.loneapex.cn/)**
+
 ---
 
 ## ✨ 特色功能
@@ -199,8 +202,5 @@ Brilliance 并不是一个只能展示 ACGN 数据的「特殊主题」。
 
 ---
 
-## 文档
-目前文档正在编写中……
-[使用文档](https://docs.loneapex.cn/)
 
 
