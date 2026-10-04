@@ -65,7 +65,7 @@ $item = is_array($editing_item) ? $editing_item : array();
                         </td>
                     </tr>
                     <tr>
-                        <th><label for="media-year">年份/季度</label></th>
+                        <th><label for="media-year">作品放送/发售时间（年份/季度）</label></th>
                         <td>
                             <input id="media-year" name="media_year" type="number" min="1900" max="2200" value="<?php echo esc_attr($item['year'] ?? ''); ?>">
                             <select name="media_quarter">
@@ -78,9 +78,10 @@ $item = is_array($editing_item) ? $editing_item : array();
                         </td>
                     </tr>
                     <tr>
-                        <th><label for="media-season">放送/发售</label></th>
+                        <th><label for="media-season">作品放送/发售时间（精确）</label></th>
                         <td>
                             <input class="regular-text" id="media-season" name="media_season_text" value="<?php echo esc_attr($item['season_text'] ?? ''); ?>">
+                            <p class="description">本项与上一项的作用相同，填写其中一项即可。如需更精确的发售时间（如 2024.2.25），可在此填写；留空则沿用上一项设置的年份与季度拼接生成时间。</p>
                         </td>
                     </tr>
                     <tr>
@@ -90,7 +91,7 @@ $item = is_array($editing_item) ? $editing_item : array();
                         </td>
                     </tr>
                     <tr>
-                        <th><label for="media-bgm">资料地址</label></th>
+                        <th><label for="media-bgm">引用资料地址</label></th>
                         <td>
                             <input class="large-text" id="media-bgm" name="media_bgm_url" type="url" value="<?php echo esc_attr($item['bgm_url'] ?? ''); ?>">
                             <p class="description">推荐填写：Bangumi、VNDB等索引站的作品条目页面</p>
@@ -100,6 +101,7 @@ $item = is_array($editing_item) ? $editing_item : array();
                         <th><label for="media-cover">封面链接</label></th>
                         <td>
                             <input class="large-text" id="media-cover" name="media_cover_source_url" type="url" value="<?php echo esc_attr($item['cover_source_url'] ?? ''); ?>">
+                            <p class="description">在此填写作品封面的远程连接。请留意是否在主题设置中开启了ACGN封面侧载功能，若开启，则自动将远程连接下载至本地存储（提高访问速度）。否则将使用填写的远程链接。</p>
                         </td>
                     </tr>
                     <tr>
@@ -113,7 +115,8 @@ $item = is_array($editing_item) ? $editing_item : array();
                         <th><label for="media-impression">印象语</label></th>
                         <td>
                             <input class="large-text" id="media-impression" name="media_impression" maxlength="40" value="<?php echo esc_attr($item['impression_text'] ?? ''); ?>">
-                            <p class="description">印象集页面使用的印象语，建议少于14字。留空则该作品不会出现在「印象集」页面中。</p>
+                            <p class="description">印象集页面使用的印象语，留空该作品不会出现在「印象集」页面中。</p>
+                            <p class="description">建议少于14字，如：“唯有那份眩目，未曾忘却”</p>
                         </td>
                     </tr>
                     <tr>
@@ -121,7 +124,7 @@ $item = is_array($editing_item) ? $editing_item : array();
                         <td>
                             <label>
                                 <input type="checkbox" name="media_show_on_home_feed" value="1" <?php checked(!empty($item['show_on_home_feed'])); ?>>
-                                在首页展示作品卡片
+                                在首页展示该作品卡片
                             </label>
                         </td>
                     </tr>
