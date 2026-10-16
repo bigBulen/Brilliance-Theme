@@ -67,6 +67,8 @@ function mimosa_register_settings() {
         // 状态监测采集方式
         'brilliance_status_collect_mode',
         'brilliance_site_notice',
+        // 404 页面开关
+        'brilliance_404_enable',
         // Reaction 设置
         'mimosa_reactions_enable', 'mimosa_reactions_quick_emojis',
         // 相似推荐 / 文章底部说明
@@ -622,6 +624,20 @@ function mimosa_settings_page() {
                             <option value="yes" <?php selected(get_option('mimosa_rss_include_shuoshuo', 'yes'), 'yes'); ?>>包含</option>
                             <option value="no"  <?php selected(get_option('mimosa_rss_include_shuoshuo', 'yes'), 'no'); ?>>不包含</option>
                         </select>
+                    </td>
+                </tr>
+            </table>
+
+            <h3>404 页面</h3>
+            <table class="form-table">
+                <tr>
+                    <th><label for="brilliance_404_enable">主题 404 页面</label></th>
+                    <td>
+                        <select id="brilliance_404_enable" name="brilliance_404_enable">
+                            <option value="yes" <?php selected(get_option('brilliance_404_enable', 'yes'), 'yes'); ?>>启用</option>
+                            <option value="no"  <?php selected(get_option('brilliance_404_enable', 'yes'), 'no'); ?>>关闭</option>
+                        </select>
+                        <p class="description">启用后，访问不存在的页面或越界页码时显示主题美化版 404 页面；关闭则回退到简单的 404 提示。</p>
                     </td>
                 </tr>
             </table>

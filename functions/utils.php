@@ -179,6 +179,30 @@ function mimosa_custom_paginate($total, $per_page, $paged) {
     return $html;
 }
 
+/**
+ * 越界页码（如 /page/999 超出最大页数）按 404 处理，
+ * 保证优先显示主题 404 页面，而不是空白页/首页。
+ */
+function mimosa_force_404_for_out_of_range_paged() {
+    if (is_admin() || is_feed() || is_preview() || is_404()) {
+        return;
+    }
+    if (!is_paged()) {
+        return;
+    }
+    global $wp_query;
+    if (!($wp_query instanceof WP_Query)) {
+        return;
+    }
+    $paged = max(1, (int) get_query_var('paged'));
+    if ($wp_query->max_num_pages && $paged > (int) $wp_query->max_num_pages) {
+        $wp_query->set_404();
+        status_header(404);
+        nocache_headers();
+    }
+}
+add_action('template_redirect', 'mimosa_force_404_for_out_of_range_paged', 1);
+
 // Gravatar CDN（可后台自定义镜像源）
 function mimosa_gravatar_cdn() {
     $cdn = trim((string) get_option('mimosa_gravatar_cdn', 'https://cravatar.com'));

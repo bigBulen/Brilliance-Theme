@@ -128,12 +128,34 @@ function mimosa_render_comment_stickers($text) {
  * 解析 Markdown（使用内置解析器）
  */
 function mimosa_parse_comment_markdown($text) {
+    if (!is_string($text)) {
+        return $text;
+    }
+
+    // 先把贴纸语法 !sticker[code] 抽成占位符再跑 Markdown：
+    // 贴纸代码里的下划线（如 sabbat_2）会被 Markdown 的斜体规则 _..._ 当成一对，
+    // 连续贴纸（!sticker[sabbat_2]!sticker[sabbat_4]）会被拆坏，导致无法解析。
+    $stickers  = array();
+    $protected = preg_replace_callback('/!sticker\[([^\]]+)\]/', function ($m) use (&$stickers) {
+        $key = "\x02STICKER" . count($stickers) . "\x03";
+        $stickers[$key] = $m[1];
+        return $key;
+    }, $text);
+
     $parser = new Mimosa_Markdown();
-    $parsed = $parser->parse($text);
-    
-    // 解析表情包语法 !sticker[code]
-    $parsed = mimosa_render_comment_stickers($parsed);
-    
+    $parsed = $parser->parse($protected);
+
+    // 还原占位符为贴纸图片
+    if (!empty($stickers)) {
+        $search  = array();
+        $replace = array();
+        foreach ($stickers as $key => $code) {
+            $search[]  = $key;
+            $replace[] = mimosa_render_comment_stickers('!sticker[' . $code . ']');
+        }
+        $parsed = str_replace($search, $replace, $parsed);
+    }
+
     return $parsed;
 }
 
