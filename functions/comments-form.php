@@ -27,7 +27,7 @@ function mimosa_render_comment_form($post_id) {
                 </div>
                 <div class="comment-form-field">
                     <label for="comment-email" class="screen-reader-text">邮箱</label>
-                    <input id="comment-email" name="email" type="email" placeholder="邮箱<?php echo $req ? ' *' : ''; ?>" value="<?php echo esc_attr($commenter['comment_author_email']); ?>"<?php echo $aria_req; ?>>
+                    <input id="comment-email" name="email" type="email" placeholder="邮箱（选填）<?php echo $req ? ' *' : ''; ?>" value="<?php echo esc_attr($commenter['comment_author_email']); ?>"<?php echo $aria_req; ?>>
                 </div>
                 <div class="comment-form-field">
                     <label for="comment-url" class="screen-reader-text">网站</label>
