@@ -300,8 +300,11 @@ function mimosa_comment_email_notify($comment_id, $commentdata) {
             
             $subject = sprintf('[%s] 您的评论收到了新回复', get_bloginfo('name'));
             
-            $reply_author = trim((string) $parent_comment->comment_author) !== '' ? $parent_comment->comment_author : '访客';
-            $reply_text = mimosa_render_comment_stickers(esc_html($comment->comment_content));
+            $reply_author   = trim((string) $parent_comment->comment_author) !== '' ? $parent_comment->comment_author : '访客';
+            $new_author     = trim((string) $comment->comment_author) !== '' ? $comment->comment_author : '访客';
+            $new_reply_text = mimosa_render_comment_stickers(esc_html($comment->comment_content));
+            $original_text  = mimosa_render_comment_stickers(esc_html($parent_comment->comment_content));
+            $original_date  = get_comment_date('Y-m-d H:i', $parent_comment);
 
             $message  = '<div style="max-width:560px;margin:24px auto;font-family:Helvetica,Arial,sans-serif;color:#2d3142;line-height:1.6;">';
             $message .= '<div style="background:#2d3142;color:#ffffff;padding:16px 24px;border-radius:12px 12px 0 0;font-size:15px;">';
@@ -310,8 +313,17 @@ function mimosa_comment_email_notify($comment_id, $commentdata) {
             $message .= '<div style="background:#ffffff;padding:24px;border-radius:0 0 12px 12px;-webkit-border-radius:0 0 12px 12px;border:1px solid #e6e8ee;border-top:none;">';
             $message .= '<p style="margin:0 0 12px;">您好 ' . esc_html($reply_author) . '，</p>';
             $message .= '<p style="margin:0 0 16px;color:#6c7080;">您在《' . esc_html($post->post_title) . '》下的评论收到了新回复：</p>';
+
+            // 引用被回复的原评论
+            $message .= '<p style="margin:0 0 6px;font-size:13px;color:#8a8fa3;">您的原评论（' . esc_html($original_date) . '）：</p>';
+            $message .= '<div style="border-left:3px solid #c9cbe0;padding:12px 16px;background:#f8f8fb;border-radius:6px;margin-bottom:18px;color:#5a5f70;font-size:14px;">';
+            $message .= nl2br($original_text);
+            $message .= '</div>';
+
+            // 新回复内容
+            $message .= '<p style="margin:0 0 6px;font-size:13px;color:#8a8fa3;">' . esc_html($new_author) . ' 的回复：</p>';
             $message .= '<div style="border-left:3px solid #7c6af7;padding:12px 16px;background:#f6f6fb;border-radius:6px;margin-bottom:20px;">';
-            $message .= nl2br($reply_text);
+            $message .= nl2br($new_reply_text);
             $message .= '</div>';
             $message .= '<p style="margin:0;"><a href="' . esc_url($post_link) . '" style="display:inline-block;padding:10px 20px;background:#7c6af7;color:#ffffff;text-decoration:none;border-radius:8px;">查看回复 &rarr;</a></p>';
             $message .= '<p style="color:#a6abb8;font-size:12px;margin-top:24px;">这是一封自动发送的邮件，请勿直接回复。</p>';
